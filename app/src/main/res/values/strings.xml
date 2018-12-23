@@ -5,7 +5,7 @@
 
     <string name="backend_url">http://192.168.0.3:</string>
 
-    <string name="app_name">HAPIS Customer</string> <!--QA build app name-->
+    <string name="app_name">HAPIS Doctor</string> <!--QA build app name-->
 
     <string name="source_type">android</string>
 
