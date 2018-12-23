@@ -23,7 +23,6 @@ import com.hapis.customer.ui.custom.BottomNavigationViewHelper;
 import com.hapis.customer.ui.custom.badges.Badge;
 import com.hapis.customer.ui.custom.badges.BadgeView;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
-import com.hapis.customer.ui.fragments.ExpiredSchedulesSchedulesFrag;
 import com.hapis.customer.ui.fragments.MenuMoreDialogFragment;
 import com.hapis.customer.ui.fragments.UpComingSchedulesFrag;
 import com.hapis.customer.ui.utils.AlertUtil;
@@ -42,7 +41,7 @@ public class DashboardActivity extends BaseFragmentActivity<DashboardViewModal> 
     }
 
     private Menu bottomMenu;
-    private MenuItem navHome, navDk, navInbox, navMoreSettings;
+    private MenuItem navHome, /*navDk,*/ navInbox, navMoreSettings;
 
     private void initViews() {
         /***************************** Bottom Navigation Bar initialization *****************************/
@@ -50,12 +49,12 @@ public class DashboardActivity extends BaseFragmentActivity<DashboardViewModal> 
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomMenu = bottomNavigationView.getMenu();
         navHome = bottomMenu.getItem(0);
-        navDk = bottomMenu.getItem(1);
-        navInbox = bottomMenu.getItem(2);
-        navMoreSettings = bottomMenu.getItem(3);
+//        navDk = bottomMenu.getItem(1);
+        navInbox = bottomMenu.getItem(1);
+        navMoreSettings = bottomMenu.getItem(2);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        bottomNavigationView.setSelectedItemId(navDk.getItemId());
+        bottomNavigationView.setSelectedItemId(navHome.getItemId());
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationMenuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
         for (int i = 0; i < bottomNavigationMenuView.getChildCount(); i++) {
@@ -130,10 +129,6 @@ public class DashboardActivity extends BaseFragmentActivity<DashboardViewModal> 
             switch (item.getItemId()) {
                 case R.id.navigation_upcoming: {
                     loadFragment(new UpComingSchedulesFrag());
-                    return true;
-                }
-                case R.id.navigation_history: {
-                    loadFragment(new ExpiredSchedulesSchedulesFrag());
                     return true;
                 }
                 case R.id.navigation_inbox: {

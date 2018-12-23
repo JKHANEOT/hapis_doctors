@@ -26,11 +26,12 @@ public interface RestConstants {
     String UPLOAD_CRASH_LOG_URL = "/Hapis-Module-Customer/rest/common/errorLogUpload";
 
 
-    String LOGIN_URL                                    = "/customers/login";
-    String REGISTER_USER_REQUEST_URL                    = "/customers/create";
+    String LOGIN_URL                                    = "/users/login";
+    String REGISTER_USER_REQUEST_URL                    = "/users";
     String UPDATE_USER_URL                              = "/customers/";
 
     String getEnterprisesByEnterpriseTypeAndCity        = "/enterprises/";/*ENTERPRISE_TYPE_INDIVIDUAL(2) OR ENTERPRISE_TYPE_HOSPITAL/CityName(Bangalore)*//*GET*/
+    String getUserEnterprisesByMobileNumber             = "/users/getUserEnterprisesBy/";/*{mobileNo}*/
     String GET_DOCTORS_BY_ENTERPRISECODE_SPECIALIZATION = "/appointments/getDoctors/";/*enterpriseCode/specialization*//*GET*/
     String getAvailableAppointments                     = "/appointments/getAvailableAppointments/";/*{doctorCode}/{requestedDate}/{enterpriseCode}*//*GET*/
     String CREATE_APPOINTMENTS                          = "/appointments";
@@ -39,4 +40,5 @@ public interface RestConstants {
     String updateAppointment                            = "/appointments/updateAppointment";
     String getEnterpriseByEnterpriseCode                = "/enterprises/";/*{enterpriseCode}*/
     String getUserByCode                                = "/users/";/*{userCode}*/
+    String getAppointmentsByDoctor                      = "/appointments/getByDoctor/";/*{doctorCode}/{hospitalCode}/{appointmentDate}*/
 }

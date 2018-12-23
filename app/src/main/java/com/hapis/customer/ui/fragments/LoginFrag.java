@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,6 +29,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.hapis.customer.BuildConfig;
 import com.hapis.customer.R;
 import com.hapis.customer.logger.LOG;
+import com.hapis.customer.ui.BaseFragmentActivity;
 import com.hapis.customer.ui.DashboardActivity;
 import com.hapis.customer.ui.LoginActivity;
 import com.hapis.customer.ui.SigupActivity;
@@ -37,6 +39,11 @@ import com.hapis.customer.ui.custom.dialogplus.DialogPlus;
 import com.hapis.customer.ui.custom.dialogplus.OnBackPressListener;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
 import com.hapis.customer.ui.custom.dialogplus.ViewHolder;
+import com.hapis.customer.ui.custom.materialedittext.MaterialEditText;
+import com.hapis.customer.ui.fragments.search.enterprise.enterprises.EnterpriseSearchCallBack;
+import com.hapis.customer.ui.fragments.search.enterprise.enterprises.EnterpriseSearchDialogFragment;
+import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
+import com.hapis.customer.ui.models.enums.EnterpriseTypeEnum;
 import com.hapis.customer.ui.utils.DialogIconCodes;
 import com.hapis.customer.ui.utils.EditTextUtils;
 import com.hapis.customer.ui.view.BaseView;
@@ -77,6 +84,9 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
     private String countryIsdCode = "";
     private ImageView appLogoIv;
 
+    private MaterialEditText select_enterprise_edittext;
+    private RelativeLayout select_enterprise_rl;
+
     public LoginFrag() {
 
     }
@@ -98,7 +108,7 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
         loginButton.setOnClickListener(new AppCompatButton.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mViewModal.validateLoginDetails(EditTextUtils.getText(inputEmailIdOrMobileNumber), EditTextUtils.getText(passwordEditText));
+                mViewModal.validateLoginDetails(EditTextUtils.getText(inputEmailIdOrMobileNumber), selectedEnterpriseRequest, EditTextUtils.getText(passwordEditText));
             }
         });
 
@@ -106,7 +116,7 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    mViewModal.validateLoginDetails(EditTextUtils.getText(inputEmailIdOrMobileNumber), EditTextUtils.getText(passwordEditText));
+                    mViewModal.validateLoginDetails(EditTextUtils.getText(inputEmailIdOrMobileNumber), selectedEnterpriseRequest, EditTextUtils.getText(passwordEditText));
                     return true;
                 }
                 return false;
@@ -199,6 +209,22 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
     }
 
     private void initViews() {
+
+        select_enterprise_rl = v.findViewById(R.id.select_enterprise_rl);
+        select_enterprise_edittext = v.findViewById(R.id.select_enterprise_edittext);
+
+        select_enterprise_edittext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!EditTextUtils.isEmpty(inputEmailIdOrMobileNumber)) {
+                    ((LoginActivity) getActivity()).showProgressDialog(getActivity(), getResources().getString(R.string.please_wait));
+                    mViewModal.getEnterprisesBy(EditTextUtils.getText(inputEmailIdOrMobileNumber));
+                }else{
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.please_enter_mobile_number), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         mainLayout = v.findViewById(R.id.main_lay); // You must use the layout root
         appLogoIv = v.findViewById(R.id.logo_iv);
         appLogoIv.setOnLongClickListener(new View.OnLongClickListener() {
@@ -236,7 +262,7 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
 
         inputLayEmailIdOrMobileNumber = v.findViewById(R.id.input_lay_email_id_or_mobile_no);
         inputLayPswd = v.findViewById(R.id.input_lay_pswd_et);
-        inputEmailIdOrMobileNumber = v.findViewById(R.id.input_email_id_or_mobile_no);
+        inputEmailIdOrMobileNumber = v.findViewById(R.id.input_mobile_no);
         passwordEditText = v.findViewById(R.id.pswd_et);
 //        loginVariableChangerSwitch = v.findViewById(R.id.login_variable_changer_switch);
 
@@ -297,7 +323,7 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
     public void validateScreenFields(String errorMsg) {
         if(errorMsg == null || (errorMsg != null && errorMsg.length() == 0)){
             ((LoginActivity)getActivity()).showProgressDialog(getActivity(), getResources().getString(R.string.please_wait_progress_msg));
-            mViewModal.doLogin(EditTextUtils.getText(inputEmailIdOrMobileNumber), EditTextUtils.getText(passwordEditText));
+            mViewModal.doLogin(EditTextUtils.getText(inputEmailIdOrMobileNumber), selectedEnterpriseRequest.getEnterpriseCode(), EditTextUtils.getText(passwordEditText));
         }else{
             ((LoginActivity)getActivity()).showError(errorMsg, null, null, null, DialogIconCodes.DIALOG_FAILED.getIconCode());
         }
@@ -355,5 +381,24 @@ public class LoginFrag extends BaseAbstractFragment<LoginFragmentViewModal> impl
             ((LoginActivity)getActivity()).dismissProgressDialog();
             ((LoginActivity)getActivity()).showError(errorMsg, null, null, null, DialogIconCodes.DIALOG_FAILED.getIconCode());
         }
+    }
+
+    private EnterpriseRequest selectedEnterpriseRequest;
+
+    @Override
+    public void updateEnterpriseByTypeAndCity(List<EnterpriseRequest> enterpriseRequestList) {
+
+        EnterpriseSearchDialogFragment dialog =
+                EnterpriseSearchDialogFragment.newInstance((BaseFragmentActivity)getActivity(), new EnterpriseSearchCallBack() {
+                    @Override
+                    public void updateSelectedValue(EnterpriseRequest enterpriseRequest) {
+                        selectedEnterpriseRequest = enterpriseRequest;
+                        select_enterprise_edittext.setText(selectedEnterpriseRequest.getEnterpriseName());
+                    }
+                }, enterpriseRequestList, "Hospital");
+        dialog.setCancelable(false);
+        dialog.show(getActivity().getSupportFragmentManager(), SelectPreferredLocationDialogFragment.TAG);
+
+        ((LoginActivity)getActivity()).dismissProgressDialog();
     }
 }

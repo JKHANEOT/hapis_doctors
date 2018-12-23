@@ -75,6 +75,12 @@ public class UserRequest extends MessageModel {
 	/** The creation date. */
 	private Date creationDate;
 
+	private String enterpriseCode;
+
+	private String userCode;
+
+	private Integer state;
+
 	/**
 	 * Gets the creation date.
 	 *
@@ -339,6 +345,30 @@ public class UserRequest extends MessageModel {
 
 	public void setIsPasswordResetRequired(Boolean isPasswordResetRequired) {
 		this.isPasswordResetRequired = isPasswordResetRequired;
+	}
+
+	public String getEnterpriseCode() {
+		return enterpriseCode;
+	}
+
+	public void setEnterpriseCode(String enterpriseCode) {
+		this.enterpriseCode = enterpriseCode;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 
 	/*

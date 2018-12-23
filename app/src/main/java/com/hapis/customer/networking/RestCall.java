@@ -380,7 +380,7 @@ public class RestCall implements RestConstants {
                                 if (status == 2) {
                                     ((BaseFragmentActivity) mActivity).dismissProgressDialog();
 //                                    Util.showAppForceUpdateDialog(mActivity);
-                                } else if (status == 1) {
+                                } else if (status == 0) {
 
                                     String errorMessage = responseStatus.getMessageDescription();
                                     String errorCode = responseStatus.getErrorCode();

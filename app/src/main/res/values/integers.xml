@@ -10,7 +10,7 @@
   -->
 
 <resources>
-    <integer name="application_type">1</integer>
+    <integer name="application_type">2</integer>
     <item type="id" name="refresh_menu_id"/>
     <item type="id" name="notification_menu_id"/>
 

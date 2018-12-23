@@ -1,6 +1,7 @@
 package com.hapis.customer.ui.adapters;
 
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hapis.customer.HapisApplication;
 import com.hapis.customer.R;
 import com.hapis.customer.ui.adapters.datamodels.DateItem;
 import com.hapis.customer.ui.adapters.datamodels.GroupDataGeneralItem;
@@ -57,7 +59,7 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
         switch (viewType) {
 
             case GroupDataListItem.TYPE_GENERAL:
-                View v1 = inflater.inflate(R.layout.common_appointment_adapter_row, parent, false);
+                View v1 = inflater.inflate(R.layout.doctor_current_day_appointment_adapter_row, parent, false);
                 viewHolder = new GeneralViewHolder(v1);
                 break;
 
@@ -83,14 +85,8 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
 
                 AppointmentRequest appointmentRequest = (AppointmentRequest)generalItem.getHapisModel();
 
-                if(appointmentRequest.getDoctorDetails() != null){
-                    generalViewHolder.doctor_title_tv.setText(appointmentRequest.getDoctorDetails().getUserName());
-                }
-                if(appointmentRequest.getEnterpriseRequest() != null){
-                    generalViewHolder.hospital_title_tv.setText(appointmentRequest.getEnterpriseRequest().getEnterpriseName());
-                    if(appointmentRequest.getEnterpriseRequest().getAddresses() != null && appointmentRequest.getEnterpriseRequest().getAddresses().size() > 0)
-                        generalViewHolder.appointment_address_tv.setText(Util.getFormattedAddress(appointmentRequest.getEnterpriseRequest().getAddresses().iterator().next()));
-                }
+                if(appointmentRequest.getPatientName() != null)
+                    generalViewHolder.patient_name_title_tv.setText(appointmentRequest.getPatientName());
 
                 StringBuilder stringBuilder = new StringBuilder();
 
@@ -100,14 +96,24 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
                     stringBuilder.append(HapisSlotUtils.getSlotName(appointmentRequest.getSlotBooked()));
                 }
 
-                generalViewHolder.appointment_date_tv.setText(stringBuilder.toString());
-
-                generalViewHolder.menu_over_flow_img_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showPopupMenu(view, position, appointmentRequest);
+                if(appointmentRequest.getState() != null && appointmentRequest.getState().intValue() > 0) {
+                    switch (appointmentRequest.getState().intValue()){
+                        case 601:{
+                            generalViewHolder.consultation_status_indicator_iv.setImageDrawable(HapisApplication.getApplication().getResources().getDrawable(R.drawable.not_yet_consulted_indicator));
+                            break;
+                        }
+                        case 602:{
+                            generalViewHolder.consultation_status_indicator_iv.setImageDrawable(HapisApplication.getApplication().getResources().getDrawable(R.drawable.consultation_cancelled_indicator));
+                            break;
+                        }
+                        case 603:{
+                            generalViewHolder.consultation_status_indicator_iv.setImageDrawable(HapisApplication.getApplication().getResources().getDrawable(R.drawable.consulted_indicator));
+                            break;
+                        }
                     }
-                });
+                }
+
+                generalViewHolder.appointment_date_tv.setText(stringBuilder.toString());
 
                 break;
             }
@@ -177,19 +183,17 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
     // View holder for general row item
     class GeneralViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView hospital_icon;
-        private AppCompatImageButton menu_over_flow_img_btn;
-        private TextView hospital_title_tv,doctor_title_tv, appointment_date_tv,appointment_address_tv;
+        private ImageView patient_icon;
+        private TextView patient_name_title_tv, appointment_date_tv;
+        private AppCompatImageView consultation_status_indicator_iv;
 
         public GeneralViewHolder(View v) {
             super(v);
 
-            hospital_icon = v.findViewById(R.id.hospital_icon);
-            menu_over_flow_img_btn = v.findViewById(R.id.menu_over_flow_img_btn);
-            hospital_title_tv = v.findViewById(R.id.hospital_title_tv);
-            doctor_title_tv = v.findViewById(R.id.doctor_title_tv);
+            patient_icon = v.findViewById(R.id.patient_icon);
+            patient_name_title_tv = v.findViewById(R.id.patient_name_title_tv);
             appointment_date_tv = v.findViewById(R.id.appointment_date_tv);
-            appointment_address_tv = v.findViewById(R.id.appointment_address_tv);
+            consultation_status_indicator_iv = v.findViewById(R.id.consultation_status_indicator_iv);
         }
     }
 

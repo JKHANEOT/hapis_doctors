@@ -22,6 +22,9 @@ public class UserModel extends MessageModel {
     private String religionCode;
     private Integer state;
 
+    private String enterpriseCode;
+    private String roles;
+
     public String getAadhaarNumber() {
         return aadhaarNumber;
     }
@@ -172,5 +175,21 @@ public class UserModel extends MessageModel {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getEnterpriseCode() {
+        return enterpriseCode;
+    }
+
+    public void setEnterpriseCode(String enterpriseCode) {
+        this.enterpriseCode = enterpriseCode;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

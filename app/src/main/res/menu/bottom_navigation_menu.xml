@@ -9,13 +9,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/navigation_history"
-        android:enabled="true"
-        android:icon="@drawable/ic_digi_kit"
-        android:title="@string/nav_title_history"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/navigation_inbox"
         android:enabled="true"
         android:icon="@drawable/ic_inbox"

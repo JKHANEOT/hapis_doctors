@@ -1,5 +1,9 @@
 package com.hapis.customer.ui.view;
 
+import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
+
+import java.util.List;
+
 public interface LoginFragmentView extends BaseView {
 
     void validateScreenFields(String errorMsg);
@@ -11,4 +15,6 @@ public interface LoginFragmentView extends BaseView {
     void SigninRequestSuccess(String msg);
 
     void SigninRequestFailed(String errorMsg);
+
+    void updateEnterpriseByTypeAndCity(List<EnterpriseRequest> enterpriseRequestList);
 }

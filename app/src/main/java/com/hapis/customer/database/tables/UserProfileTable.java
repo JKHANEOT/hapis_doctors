@@ -55,6 +55,10 @@ public class UserProfileTable {
 
     private int state;
 
+    private String enterpriseCode;
+
+    private String roles;
+
     public int getId() {
         return id;
     }
@@ -245,5 +249,21 @@ public class UserProfileTable {
 
     public void setCustomerType(int customerType) {
         this.customerType = customerType;
+    }
+
+    public String getEnterpriseCode() {
+        return enterpriseCode;
+    }
+
+    public void setEnterpriseCode(String enterpriseCode) {
+        this.enterpriseCode = enterpriseCode;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

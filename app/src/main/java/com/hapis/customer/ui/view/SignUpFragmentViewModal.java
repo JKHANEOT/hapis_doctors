@@ -7,25 +7,30 @@ import android.support.annotation.Nullable;
 
 import com.hapis.customer.HapisApplication;
 import com.hapis.customer.R;
+import com.hapis.customer.database.repository.AppointmentRepository;
 import com.hapis.customer.database.repository.UserProfileRepository;
-import com.hapis.customer.ui.models.AddressModel;
 import com.hapis.customer.ui.models.HapisModel;
 import com.hapis.customer.ui.models.ResponseStatus;
-import com.hapis.customer.ui.models.UserModel;
-import com.hapis.customer.ui.models.UserModelResponse;
-import com.hapis.customer.ui.utils.ApplicationConstants;
+import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
+import com.hapis.customer.ui.models.enterprise.EnterpriseResponseList;
+import com.hapis.customer.ui.models.users.UserRequest;
+import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.EditTextUtils;
+
+import java.util.List;
 
 public class SignUpFragmentViewModal extends BaseViewModal<SignUpFragmentView> {
 
     private String TAG = SignUpFragmentViewModal.class.getName();
 
     private UserProfileRepository userProfileRepository;
+    private AppointmentRepository appointmentRepository;
 
     public SignUpFragmentViewModal(LifecycleOwner owner) {
         super(owner);
 
         userProfileRepository = new UserProfileRepository();
+        appointmentRepository = new AppointmentRepository();
     }
 
     @Override
@@ -38,73 +43,58 @@ public class SignUpFragmentViewModal extends BaseViewModal<SignUpFragmentView> {
 
     }
 
-    public void validateRegistrationDetails(String first_name, String last_name, int radioButtonId, String selectedMaritalStatus,
-                                            String selectedNationality, String selectedReligion, String mobile_number, String emailId,
-                                            String dob, String password, String aadhaar_number, AddressModel addressModel) {
+    public void validateRegistrationDetails(List<String> mSelectedLocation, EnterpriseRequest selectedEnterpriseRequest, String specialization, String first_name, String last_name, String mobile_number, String emailId,
+                                            String password) {
         String msg = null;
 
-        if(EditTextUtils.isEmpty(first_name)){
+        if(!(mSelectedLocation != null && mSelectedLocation.size() > 0 && mSelectedLocation.size() == 3)){
+            msg = HapisApplication.getApplication().getResources().getString(R.string.please_select_preferred_location);
+        }else if(selectedEnterpriseRequest == null){
+            msg = HapisApplication.getApplication().getResources().getString(R.string.please_select_enterprise);
+        }else if(EditTextUtils.isEmpty(specialization)){
+            msg = HapisApplication.getApplication().getResources().getString(R.string.please_select_specialization);
+        }else if(EditTextUtils.isEmpty(first_name)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_first_name);
         }else if(EditTextUtils.isEmpty(last_name)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_last_name);
-        }else if(radioButtonId == -1){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_choose_gender);
-        }else if(selectedMaritalStatus == null){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_choose_marital_status);
-        }else if(selectedNationality == null){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_choose_nationality);
-        }else if(selectedReligion == null){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_choose_religion);
         }else if(EditTextUtils.isEmpty(mobile_number)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_mobile_number);
-        }else if(EditTextUtils.isEmpty(emailId)){
+        }/*else if(EditTextUtils.isEmpty(emailId)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_email_id);
-        }else if(!EditTextUtils.isValidEmail(emailId)){
+        }*/else if(!EditTextUtils.isEmpty(emailId) && !EditTextUtils.isValidEmail(emailId)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_valid_email_id);
-        }else if(EditTextUtils.isEmpty(dob)){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_select_date_of_birth);
         }else if(EditTextUtils.isEmpty(password)){
             msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_password);
-        }else if(EditTextUtils.isEmpty(aadhaar_number)){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_enter_aadhaar_number);
-        }else if(addressModel == null){
-            msg = HapisApplication.getApplication().getResources().getString(R.string.please_add_address);
         }
 
         mView.validateScreenFields(msg);
     }
 
-    MutableLiveData<UserModelResponse> mutableLiveData = new MutableLiveData<UserModelResponse>();
+    MutableLiveData<UserResponse> mutableLiveData = new MutableLiveData<UserResponse>();
 
-    public void doSignup(String selectedPrefix, String firstName, String middleName, String lastName, String gender, String aadharCardNumber, String selectedMaritalStatus, String selectedNationality, String selectedReligion,
-                         String mobileNumber, String emailAddress, String dateOfBirth, String password, String externalReference, AddressModel visibleCurrentLocation) {
+    public void doSignup(String enterpriseCode, String specialization, String selectedPrefix, String firstName, String middleName, String lastName,
+                         String mobileNumber, String emailAddress, String password) {
 
-        UserModel userModel = new UserModel();
+        UserRequest userRequest = new UserRequest();
 
-        userModel.setAgentCode("NotDefined");
-        userModel.setNamePrefix(selectedPrefix);
-        userModel.setFirstName(firstName);
-        userModel.setMiddleName(middleName);
-        userModel.setLastName(lastName);
-        userModel.setGenderCode(gender);
-        userModel.setAadhaarNumber(aadharCardNumber);
-        userModel.setMaritalStatus(selectedMaritalStatus);
-        userModel.setNationality(selectedNationality);
-        userModel.setReligionCode(selectedReligion);
-        userModel.setMobileNumber(mobileNumber);
-        userModel.setEmailAddress(emailAddress);
-        userModel.setDateOfBirth(dateOfBirth);
-        userModel.setPassword(password);
-        userModel.setExternalReference(externalReference);
+        userRequest.setEnterpriseCode(enterpriseCode);
+        userRequest.setRoles(specialization);
 
-        userModel.setAddress(visibleCurrentLocation);
+        userRequest.setAgentCode("NotDefined");
+        userRequest.setNamePrefix(selectedPrefix);
+        userRequest.setFirstName(firstName);
+        userRequest.setMiddleName(middleName);
+        userRequest.setLastName(lastName);
+        userRequest.setMobileNo(mobileNumber);
+        userRequest.setEmailAddress(emailAddress);
+        userRequest.setPassword(password);
 
-        userModel.setCustomerType(HapisApplication.getApplication().getResources().getInteger(R.integer.application_type));
+        userRequest.setUserType(HapisApplication.getApplication().getResources().getInteger(R.integer.application_type));
 
-        userProfileRepository.doSignup(mutableLiveData, userModel);
-        mutableLiveData.observe(mOwner, new Observer<UserModelResponse>() {
+        userProfileRepository.doSignup(mutableLiveData, userRequest);
+        mutableLiveData.observe(mOwner, new Observer<UserResponse>() {
             @Override
-            public void onChanged(@Nullable UserModelResponse userModelResponse) {
+            public void onChanged(@Nullable UserResponse userModelResponse) {
                 if(userModelResponse != null){
                     if(userModelResponse.getStatus() != null && userModelResponse.getStatus().getStatusCode() != null && userModelResponse.getStatus().getStatusCode().intValue() == ResponseStatus.SUCCESS){
                         mView.SignupRequestSuccess(HapisApplication.getApplication().getResources().getString(R.string.signup_successful));
@@ -112,6 +102,39 @@ public class SignUpFragmentViewModal extends BaseViewModal<SignUpFragmentView> {
                         mView.SignupRequestFailed(((userModelResponse.getStatus().getErrorMessages() != null && userModelResponse.getStatus().getErrorMessages().size() > 0) ? userModelResponse.getStatus().getErrorMessages().get(0).getMessageDescription() : HapisApplication.getApplication().getResources().getString(R.string.unable_to_process_request)));
                     }
                 }else{
+                    mView.SignupRequestFailed(HapisApplication.getApplication().getResources().getString(R.string.unable_to_process_request));
+                }
+            }
+        });
+    }
+
+    public void getEnterprisesBy(int enterpriseType, String City) {
+
+        MutableLiveData<EnterpriseResponseList> enterpriseResponseListMutableLiveData = new MutableLiveData<>();
+
+        appointmentRepository.getEnterprisesByEnterpriseTypeAndCity(enterpriseResponseListMutableLiveData, enterpriseType, City);
+        enterpriseResponseListMutableLiveData.observe(mOwner, new Observer<EnterpriseResponseList>() {
+            @Override
+            public void onChanged(@Nullable EnterpriseResponseList enterpriseResponseList) {
+                if(enterpriseResponseList != null){
+                    if(enterpriseResponseList.getResults() != null && enterpriseResponseList.getResults().size() > 0){
+                        mView.updateEnterpriseByTypeAndCity(enterpriseResponseList.getResults());
+                    }else{
+                        enterpriseResponseListMutableLiveData.removeObserver(new Observer<EnterpriseResponseList>() {
+                            @Override
+                            public void onChanged(@Nullable EnterpriseResponseList enterpriseResponseList) {
+
+                            }
+                        });
+                        mView.SignupRequestFailed(((enterpriseResponseList.getStatus().getErrorMessages() != null && enterpriseResponseList.getStatus().getErrorMessages().size() > 0) ? enterpriseResponseList.getStatus().getErrorMessages().get(0).getMessageDescription() : HapisApplication.getApplication().getResources().getString(R.string.unable_to_process_request)));
+                    }
+                }else{
+                    enterpriseResponseListMutableLiveData.removeObserver(new Observer<EnterpriseResponseList>() {
+                        @Override
+                        public void onChanged(@Nullable EnterpriseResponseList enterpriseResponseList) {
+
+                        }
+                    });
                     mView.SignupRequestFailed(HapisApplication.getApplication().getResources().getString(R.string.unable_to_process_request));
                 }
             }

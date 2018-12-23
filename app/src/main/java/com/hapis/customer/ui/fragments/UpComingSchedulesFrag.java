@@ -1,9 +1,7 @@
 package com.hapis.customer.ui.fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hapis.customer.R;
-import com.hapis.customer.ui.BookAppointmentActivity;
 import com.hapis.customer.ui.DashboardActivity;
 import com.hapis.customer.ui.adapters.UpComingSchedulesRecyclerViewAdapter;
 import com.hapis.customer.ui.adapters.datamodels.DateItem;
@@ -36,8 +33,6 @@ import java.util.TreeMap;
 
 public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedulesFragmentViewModal> implements UpComingSchedulesFragmentView,
         UpComingSchedulesRecyclerViewAdapter.UpComingScheduleAdapterListeners {
-
-    private FloatingActionButton createAnAppointment;
 
     private View v;
     private static final String TAG = UpComingSchedulesFrag.class.getName();
@@ -64,14 +59,6 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
 
         list_empty_tv = v.findViewById(R.id.list_empty_tv);
 
-        createAnAppointment = v.findViewById(R.id.fab_create_an_appointment);
-        createAnAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BookAppointmentActivity.class);
-                startActivity(intent);
-            }
-        });
         return v;
     }
 
@@ -101,11 +88,6 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
     public void failedToProcess(String errorMsg) {
         list_empty_tv.setVisibility(View.VISIBLE);
         upcoming_appointments_rv.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void fetchEnterpriseDetails(List<AppointmentRequest> appointmentRequests) {
-        mViewModal.getEnterpriseDetails(appointmentRequests);
     }
 
     @Override

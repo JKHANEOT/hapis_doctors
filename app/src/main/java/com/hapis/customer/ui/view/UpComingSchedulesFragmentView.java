@@ -11,7 +11,5 @@ public interface UpComingSchedulesFragmentView extends BaseView {
 
     void failedToProcess(String errorMsg);
 
-    void fetchEnterpriseDetails(List<AppointmentRequest> appointmentRequests);
-
     void showUpComingAppointments(List<AppointmentRequest> appointmentRequests);
 }

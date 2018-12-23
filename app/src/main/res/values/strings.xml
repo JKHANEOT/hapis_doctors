@@ -1672,7 +1672,7 @@
     <string name="signed_up_data_not_found_by_mobile_try_with_email_id">Signed up data not found by mobile try with email ID.</string>
     <string name="signed_up_data_not_found_by_email_id_try_doing_registration">Signed up data not found by email ID try doing registration</string>
     <string name="sign_in_successful">Sign In Successful</string>
-    <string name="nav_title_upcoming">Upcoming</string>
+    <string name="nav_title_upcoming">Appointments</string>
     <string name="nav_title_history">History</string>
     <string name="book_appointment">Book Appointment</string>
     <string name="select_enterprise">Select Hospital</string>
