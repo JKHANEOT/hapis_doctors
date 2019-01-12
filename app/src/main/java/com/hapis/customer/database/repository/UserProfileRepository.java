@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import com.hapis.customer.HapisApplication;
-import com.hapis.customer.R;
 import com.hapis.customer.database.HapisDatabase;
 import com.hapis.customer.database.daos.AddressDao;
 import com.hapis.customer.database.daos.ApplicationProfileDao;
@@ -19,10 +18,9 @@ import com.hapis.customer.networking.json.JSONAdaptor;
 import com.hapis.customer.networking.util.RestConstants;
 import com.hapis.customer.ui.models.ErrorMessage;
 import com.hapis.customer.ui.models.ResponseStatus;
-import com.hapis.customer.ui.models.UserModel;
-import com.hapis.customer.ui.models.UserModelResponse;
 import com.hapis.customer.ui.models.users.LoginRequest;
 import com.hapis.customer.ui.models.users.LoginResponse;
+import com.hapis.customer.ui.models.users.UserListResponse;
 import com.hapis.customer.ui.models.users.UserRequest;
 import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.AccessPreferences;
@@ -213,23 +211,26 @@ public class UserProfileRepository {
                     try {
                         UserProfileTable userProfileTable = userProfileDao.getUserProfileByMobileNumber(userName, password);
 
-                        applicationProfileDao.setAppProfileStatus(ApplicationConstants.USER_LOGGED_IN);
-                        AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
+                        if(userProfileTable != null && userProfileTable.getUniqueId() != null && userProfileTable.getUniqueId().length() > 0) {
+                            applicationProfileDao.setAppProfileStatus(ApplicationConstants.USER_LOGGED_IN);
+                            AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
 
-                        userProfileTable.setLastLoginDate(new Date().getTime());
-                        if(userProfileDao.getNumberOfRows(userProfileTable.getUniqueId()) > 0)
-                            userProfileDao.update(userProfileTable);
-                        else
-                            userProfileDao.insert(userProfileTable);
+                            userProfileTable.setLastLoginDate(new Date().getTime());
+                            if (userProfileDao.getNumberOfRows(userProfileTable.getUniqueId()) > 0)
+                                userProfileDao.update(userProfileTable);
+                            else
+                                userProfileDao.insert(userProfileTable);
 
-                        ResponseStatus responseStatus = new ResponseStatus();
-                        responseStatus.setStatusCode(ResponseStatus.SUCCESS);
+                            ResponseStatus responseStatus = new ResponseStatus();
+                            responseStatus.setStatusCode(ResponseStatus.SUCCESS);
 
-                        LoginResponse userModelResponse = new LoginResponse();
-                        userModelResponse.setStatus(responseStatus);
+                            LoginResponse userModelResponse = new LoginResponse();
+                            userModelResponse.setStatus(responseStatus);
 
-                        mutableLiveData.postValue(userModelResponse);
-
+                            mutableLiveData.postValue(userModelResponse);
+                        }else{
+                            getUserDetails(mutableLiveData, userName, enterpriseCode, password);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         ResponseStatus responseStatus = new ResponseStatus();
@@ -247,6 +248,153 @@ public class UserProfileRepository {
             restCall.post(null, false, "Loading items",
                     HapisApplication.getApplication().getBackendUrl()+"9300"  + RestConstants.LOGIN_URL,
                     JSONAdaptor.toJSON(loginRequest));
+        } catch (IOException e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            LoginResponse userModelResponse = new LoginResponse();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            LoginResponse userModelResponse = new LoginResponse();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        }
+    }
+
+    public void getUserDetails(final MutableLiveData<LoginResponse> mutableLiveData, final String userName, final String enterpriseCode, final String password) {
+
+        RestCall restCall = new RestCall();
+        restCall.setOnRestCallListener(new RestCall.RestCallListener() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+
+                ResponseStatus responseStatus = new ResponseStatus();
+                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                LoginResponse userModelResponse = new LoginResponse();
+                userModelResponse.setStatus(responseStatus);
+
+                mutableLiveData.postValue(userModelResponse);
+            }
+
+            @Override
+            public void onResponse(RestCall.Result result, String response, List<ErrorMessage> errorMessages, String msg) {
+                if (result == RestCall.Result.FAILED || result == RestCall.Result.EXCEPTION) {
+                    ResponseStatus responseStatus = new ResponseStatus();
+                    responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                    LoginResponse userModelResponse = new LoginResponse();
+                    userModelResponse.setStatus(responseStatus);
+
+                    mutableLiveData.postValue(userModelResponse);
+                } else {
+                    try {
+
+                        UserListResponse userListResponse = JSONAdaptor.fromJSON(response, UserListResponse.class);
+                        if(userListResponse != null && userListResponse.getResults() != null && userListResponse.getResults().size() > 0){
+                            boolean foundUser = false;
+                            for(UserRequest userRequest : userListResponse.getResults()){
+                                if(userRequest != null && userRequest.getMobileNo() != null && userRequest.getMobileNo().equals(userName) && userRequest.getPassword() != null && userRequest.getPassword().equals(password)){
+
+                                    UserProfileTable userProfileTable = new UserProfileTable();
+
+                                    userProfileTable.setUniqueId(userRequest.getUserCode());
+                                    userProfileTable.setEnterpriseCode(userRequest.getEnterpriseCode());
+                                    userProfileTable.setRoles(userRequest.getRoles());
+                                    userProfileTable.setTitle(userRequest.getNamePrefix());
+                                    userProfileTable.setFirstName(userRequest.getFirstName());
+                                    userProfileTable.setMiddleName(userRequest.getMiddleName());
+                                    userProfileTable.setLastName(userRequest.getLastName());
+                                    userProfileTable.setMobileNumber(userRequest.getMobileNo());
+                                    userProfileTable.setEmail(userRequest.getEmailAddress());
+                                    userProfileTable.setPassword(userRequest.getPassword());
+
+                                    userProfileTable.setProfileUpdatedDate(new Date().getTime());
+
+                                    userProfileTable.setAgentCode(userRequest.getAgentCode());
+                                    userProfileTable.setCustomerType(userRequest.getUserType());
+                                    userProfileTable.setState(userRequest.getState());
+
+                                    userProfileDao.insert(userProfileTable);
+
+                                    foundUser = true;
+                                    break;
+                                }
+                            }
+                            if(!foundUser){
+                                ResponseStatus responseStatus = new ResponseStatus();
+                                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                                LoginResponse userModelResponse = new LoginResponse();
+                                userModelResponse.setStatus(responseStatus);
+
+                                mutableLiveData.postValue(userModelResponse);
+                            }else{
+
+                                UserProfileTable userProfileTable = userProfileDao.getUserProfileByMobileNumber(userName, password);
+
+                                if(userProfileTable != null && userProfileTable.getUniqueId() != null && userProfileTable.getUniqueId().length() > 0) {
+                                    applicationProfileDao.setAppProfileStatus(ApplicationConstants.USER_LOGGED_IN);
+                                    AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
+
+                                    userProfileTable.setLastLoginDate(new Date().getTime());
+                                    if (userProfileDao.getNumberOfRows(userProfileTable.getUniqueId()) > 0)
+                                        userProfileDao.update(userProfileTable);
+                                    else
+                                        userProfileDao.insert(userProfileTable);
+
+                                    ResponseStatus responseStatus = new ResponseStatus();
+                                    responseStatus.setStatusCode(ResponseStatus.SUCCESS);
+
+                                    LoginResponse userModelResponse = new LoginResponse();
+                                    userModelResponse.setStatus(responseStatus);
+
+                                    mutableLiveData.postValue(userModelResponse);
+                                }else{
+
+                                    ResponseStatus responseStatus = new ResponseStatus();
+                                    responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                                    LoginResponse userModelResponse = new LoginResponse();
+                                    userModelResponse.setStatus(responseStatus);
+
+                                    mutableLiveData.postValue(userModelResponse);
+                                }
+                            }
+                        }else{
+                            ResponseStatus responseStatus = new ResponseStatus();
+                            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                            LoginResponse userModelResponse = new LoginResponse();
+                            userModelResponse.setStatus(responseStatus);
+
+                            mutableLiveData.postValue(userModelResponse);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ResponseStatus responseStatus = new ResponseStatus();
+                        responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                        LoginResponse userModelResponse = new LoginResponse();
+                        userModelResponse.setStatus(responseStatus);
+
+                        mutableLiveData.postValue(userModelResponse);
+                    }
+                }
+            }
+        });
+        try {
+            restCall.get(null, false, "Loading items",
+                    HapisApplication.getApplication().getBackendUrl()+"9300"  + RestConstants.getAllUsersByEnterpriseCode+enterpriseCode);
         } catch (IOException e) {
             e.printStackTrace();
             ResponseStatus responseStatus = new ResponseStatus();

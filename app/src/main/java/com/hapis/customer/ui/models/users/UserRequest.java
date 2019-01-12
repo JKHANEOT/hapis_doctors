@@ -1,11 +1,3 @@
-/**
- * Copyright (C) Davinta Technologies 2017. All rights reserved.
- *
- * This software is the confidential and proprietary information
- * of Davinta Technologies. You shall not disclose such Confidential Information
- * and shall use it only in accordance with the terms and conditions
- * entered into with Davinta Technologies.
- */
 
 package com.hapis.customer.ui.models.users;
 
@@ -14,15 +6,13 @@ import com.hapis.customer.ui.models.MessageModel;
 import java.util.Date;
 import java.util.List;
 
-/**
- * It will use as the request payload from user.
- *
- * @author Sarabjeet Chouhan
- */
 public class UserRequest extends MessageModel {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	/** The user name. */
+//	private String userName;
 
 	/** The fullname. */
 	private String firstName;
@@ -72,6 +62,9 @@ public class UserRequest extends MessageModel {
 
 	private Boolean isPasswordResetRequired;
 
+	/** The created by. */
+//	private String createdBy;
+
 	/** The creation date. */
 	private Date creationDate;
 
@@ -80,6 +73,15 @@ public class UserRequest extends MessageModel {
 	private String userCode;
 
 	private Integer state;
+	
+	/**
+	 * Gets the created by.
+	 *
+	 * @return the created by
+	 */
+//	public String getCreatedBy() {
+//		return createdBy;
+//	}
 
 	/**
 	 * Gets the creation date.
@@ -91,6 +93,15 @@ public class UserRequest extends MessageModel {
 	}
 
 	/**
+	 * Sets the created by.
+	 *
+	 * @param createdBy the new created by
+	 */
+//	public void setCreatedBy(String createdBy) {
+//		this.createdBy = createdBy;
+//	}
+
+	/**
 	 * Sets the creation date.
 	 *
 	 * @param creationDate the new creation date
@@ -98,6 +109,24 @@ public class UserRequest extends MessageModel {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+
+	/**
+	 * Gets the user name.
+	 *
+	 * @return the user name
+	 */
+//	public String getUserName() {
+//		return userName;
+//	}
+
+	/**
+	 * Sets the user name.
+	 *
+	 * @param userName the new user name
+	 */
+//	public void setUserName(String userName) {
+//		this.userName = userName;
+//	}
 
 	/**
 	 * Gets the first name.
@@ -355,20 +384,20 @@ public class UserRequest extends MessageModel {
 		this.enterpriseCode = enterpriseCode;
 	}
 
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
-
 	public String getUserCode() {
 		return userCode;
 	}
 
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	/*
@@ -380,6 +409,11 @@ public class UserRequest extends MessageModel {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UserRequest [");
+		/*if (userName != null) {
+			builder.append("userName=");
+			builder.append(userName);
+			builder.append(", ");
+		}*/
 		if (firstName != null) {
 			builder.append("firstName=");
 			builder.append(firstName);
