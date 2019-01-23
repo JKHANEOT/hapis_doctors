@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/patient_appointment_history_ll"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/patient_appointment_history_header_rl"
+            android:background="@color/app_dark_color"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/patient_appointment_history_tv"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textDirection="locale"
+                style="@style/bold_16sp"
+                android:text="Appointment History"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:textColor="@color/white"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/view_more_patient_appointment_history_tv"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textDirection="locale"
+                style="@style/semi_bold_10sp"
+                android:text="more"
+                android:drawableEnd="@drawable/ic_show_more_white"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+        <include layout="@layout/patient_appointment_history_info_row"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/doctor_consultation_sv"
+        android:layout_above="@+id/patient_appointment_history_ll"
+        android:scrollbars="none"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/patient_info_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/patient_profile_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/ic_default_avatar_male"/>
+
+                <LinearLayout
+                    android:id="@+id/patient_info_ll"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/patient_profile_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/patient_name_val_tv"
+                        android:textDirection="locale"
+                        style="@style/bold_16sp"
+                        android:text="ABCD"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:textColor="@color/app_dark_color"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/patient_id_lbl_tv"
+                            android:textDirection="locale"
+                            style="@style/bold_14sp"
+                            android:text="Patient ID : "
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/app_dark_color"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/patient_id_val_tv"
+                            android:layout_marginStart="10dp"
+                            android:textDirection="locale"
+                            style="@style/semi_bold_14sp"
+                            android:text="XYZ123"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/app_color_transparent"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/patient_age_lbl_tv"
+                                android:textDirection="locale"
+                                style="@style/bold_12sp"
+                                android:text="Age : "
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/patient_age_val_tv"
+                                android:layout_marginStart="10dp"
+                                android:textDirection="locale"
+                                style="@style/semi_bold_10sp"
+                                android:text="00"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color_transparent"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="50"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/patient_gender_lbl_tv"
+                                android:textDirection="locale"
+                                style="@style/bold_12sp"
+                                android:text="Gender : "
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/patient_gender_val_tv"
+                                android:layout_marginStart="10dp"
+                                android:textDirection="locale"
+                                style="@style/semi_bold_10sp"
+                                android:text="M/F/T"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color_transparent"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/patient_mobile_lbl_tv"
+                            android:textDirection="locale"
+                            style="@style/bold_12sp"
+                            android:text="Mobile : "
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/app_dark_color"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/patient_mobile_val_tv"
+                            android:layout_marginStart="10dp"
+                            android:textDirection="locale"
+                            style="@style/semi_bold_10sp"
+                            android:text="00"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/hyper_link_style_text_color"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/seperator_rl1"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/view_dotted_separator1"
+                    android:layout_centerInParent="true"
+                    android:layerType="software"
+                    android:background="@drawable/dotted_transparent_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/payment_patient_note_rl"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/payment_info_ll"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/payment_info_lbl_tv"
+                            android:textDirection="locale"
+                            style="@style/bold_14sp"
+                            android:text="Payment : "
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/app_dark_color"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/payment_info_val_tv"
+                            android:layout_marginStart="10dp"
+                            android:textDirection="locale"
+                            style="@style/semi_bold_14sp"
+                            android:text="00.00"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:textColor="@color/app_color_transparent"/>
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/payment_status_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33.7dp"
+                        android:background="@drawable/payment_paid_rounded_button"
+                        android:stateListAnimator="@null"
+                        android:padding="5dp"
+                        android:text="@string/payment_pending"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/button_text_size"/>
+
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_patients_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/payment_info_ll"
+                    android:textDirection="locale"
+                    android:background="@drawable/textinputedittext_bg"
+                    android:focusable="false"
+                    android:layout_marginStart="5dp"
+                    android:gravity="start"
+                    android:hint="@string/patient_note"
+                    android:lines="4"
+                    android:ellipsize="end"
+                    android:padding="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/md_grey_700"
+                    style="@style/semi_bold_12sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/seperator_rl2"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/view_dotted_separator2"
+                    android:layout_centerInParent="true"
+                    android:layerType="software"
+                    android:background="@drawable/dotted_transparent_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+
+
+            </RelativeLayout>
+
+            <include layout="@layout/patient_appointment_prescription_info"/>
+
+            <RelativeLayout
+                android:id="@+id/seperator_rl3"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/view_dotted_separator3"
+                    android:layout_centerInParent="true"
+                    android:layerType="software"
+                    android:background="@drawable/dotted_transparent_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/appointment_doctor_note_rl"
+                android:background="@drawable/textinputedittext_bg"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/doctor_appointment_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textDirection="locale"
+                    android:cursorVisible="true"
+                    android:fadeScrollbars="true"
+                    android:gravity="start"
+                    android:background="@null"
+                    android:hint="@string/doctor_notes"
+                    android:lines="3"
+                    android:padding="5dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/md_grey_700"
+                    android:textCursorDrawable="@drawable/cursor_black"
+                    style="@style/semi_bold_12sp"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/submit_button"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/doctor_appointment_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="33.7dp"
+                    android:background="@drawable/doctor_appointment_complete_bg"
+                    android:padding="5dp"
+                    android:text="@string/complete_consultation"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

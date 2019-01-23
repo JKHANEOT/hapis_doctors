@@ -1749,5 +1749,11 @@
     <string name="appointment_successfull">Appointment Booked Successfully</string>
     <string name="no_data_found">No data found</string>
     <string name="stay_connected">Stay Connected...!!</string>
+    <string name="payment_paid">Paid</string>
+    <string name="payment_pending">Pending</string>
+    <string name="patient_note">Patient Note</string>
+    <string name="prescription">Prescription</string>
+    <string name="doctor_notes">Doctor Notes</string>
+    <string name="complete_consultation">Complete Consultation</string>
 
 </resources>

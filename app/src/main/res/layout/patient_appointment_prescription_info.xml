@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/doctor_prescription_rl"
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/prescription_tv"
+        android:textDirection="locale"
+        style="@style/bold_16sp"
+        android:text="Prescription"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:textColor="@color/app_dark_color"/>
+
+    <LinearLayout
+        android:id="@+id/add_prescription_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/capture_prescription_rl"
+            android:clickable="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/capture_photo_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_camera_place_new_sr" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/capture_photo_tv"
+                android:layout_below="@+id/capture_photo_iv"
+                android:textDirection="locale"
+                style="@style/semi_bold_12sp"
+                android:text="Capture"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/app_dark_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/attach_prescription_rl"
+            android:clickable="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/browse_doc_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_attachments_place_new_sr"
+                android:layout_marginStart="20dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/browse_doc_tv"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/browse_doc_iv"
+                android:textDirection="locale"
+                style="@style/semi_bold_12sp"
+                android:text="Attach"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/app_dark_color"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_prescription_rl"
+            android:clickable="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/add_prescription_iv"
+                android:layout_centerHorizontal="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_add_prescriptions" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/add_prescription_tv"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/add_prescription_iv"
+                android:textDirection="locale"
+                style="@style/semi_bold_12sp"
+                android:text="Add"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/app_dark_color"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/added_prescription_rl"
+        android:layout_below="@+id/add_prescription_ll"
+        android:background="@drawable/textinputedittext_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_doctor_prescription"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textDirection="locale"
+            android:focusable="false"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/prescription"
+            android:padding="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/md_grey_700"
+            style="@style/semi_bold_12sp"/>
+
+        <LinearLayout
+            android:id="@+id/edit_delete_ll"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/input_doctor_prescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/edit_prescription_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/edit_prescription_iv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/ic_edit_address_place_new_sr"
+                    android:layout_marginEnd="10dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/edit_prescription_tv"
+                    android:textDirection="locale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/edit"
+                    android:textAllCaps="false"
+                    android:textColor="#131c2e"
+                    style="@style/regular_12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_prescription_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/delete_prescription_iv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/ic_delete"
+                    android:layout_marginEnd="10dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/delete_prescription_tv"
+                    android:textDirection="locale"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/delete"
+                    android:textAllCaps="false"
+                    android:textColor="#131c2e"
+                    style="@style/regular_12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/prescription_rv"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"/>
+
+</LinearLayout>

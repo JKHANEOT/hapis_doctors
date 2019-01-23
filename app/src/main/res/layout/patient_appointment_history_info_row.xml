@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/patient_appointment_history_info_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_weight="30"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/appointment_day_tv"
+            android:textDirection="locale"
+            style="@style/bold_12sp"
+            android:text="Day"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@color/app_dark_color"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/appointment_date_tv"
+            android:textDirection="locale"
+            style="@style/bold_12sp"
+            android:text="Date"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@color/app_color_transparent"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/appointment_month_year_tv"
+            android:textDirection="locale"
+            style="@style/bold_12sp"
+            android:text="Month Year"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textColor="@color/hyper_link_style_text_color"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/et_text_color"/>
+
+    <RelativeLayout
+        android:id="@+id/view_appointment_details_rl"
+        android:clickable="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_weight="70"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_appointment_details_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_curved_app_color_arrow_right" />
+
+        <!--<LinearLayout
+            android:id="@+id/view_appointment_details_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_button_app_dark_color"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/semi_bold_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/view_more"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="10.3dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_curved_app_color_arrow_right" />
+
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_toStartOf="@+id/view_appointment_details_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appointment_time_tv"
+                android:textDirection="locale"
+                style="@style/bold_12sp"
+                android:text="Time"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/appointment_consulted_indicator_color"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appointment_doctor_notes_tv"
+                android:textDirection="locale"
+                style="@style/bold_12sp"
+                android:text="Doctor Notes"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/appointment_consulted_indicator_color"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/appointment_fees_tv"
+                android:textDirection="locale"
+                style="@style/bold_12sp"
+                android:text="Fees"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textColor="@color/appointment_consulted_indicator_color"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

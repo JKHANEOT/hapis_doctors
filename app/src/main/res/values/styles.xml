@@ -76,6 +76,11 @@
         <item name="android:textSize">11sp</item>
     </style>
 
+    <style name="semi_bold_10sp" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/opensans_semi_bold</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="semi_bold_12sp" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/opensans_semi_bold</item>
         <item name="android:textSize">12sp</item>

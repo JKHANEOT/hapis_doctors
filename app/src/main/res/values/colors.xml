@@ -3,6 +3,7 @@
 
     <!-- ======================================== -->
     <color name="app_dark_color">#131C2E</color>
+    <color name="app_dark_color_transparent">#9F131C2E</color>
     <color name="button_bg_color">@color/app_dark_color</color>
     <color name="soft_white">#fffafafa</color>
     <color name="button_text_color">@color/soft_white</color>
@@ -60,6 +61,7 @@
 
     <!--<color name="app_color">#FF0080</color>--><!-- real color - #ffCD2451-->  <!--test color pink shade - #FF0080-->  <!-- Golden yellow - #FFDF00-->  <!--gold - #FFD700-->
     <color name="app_color">#D53C64</color>
+    <color name="app_color_transparent">#9FD53C64</color>
     <color name="transparent">#00000000</color>
     <color name="semi_transparent_black">#80000000</color>
     <color name="dialog_plus_bg">#9F000000</color>
