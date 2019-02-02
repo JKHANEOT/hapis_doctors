@@ -1755,5 +1755,23 @@
     <string name="prescription">Prescription</string>
     <string name="doctor_notes">Doctor Notes</string>
     <string name="complete_consultation">Complete Consultation</string>
+    <string name="consultation">Consultation</string>
+    <string name="select_drug_type">Select Drug Type</string>
+    <string name="drug_type">Drug Type</string>
+    <string name="select_drug">Select Drug</string>
+    <string name="drug">Drug</string>
+    <string name="after_food">After Food</string>
+    <string name="before_food">Before Food</string>
+    <string name="select_dose">Select Dose</string>
+    <string name="dose">Dose</string>
+    <string name="payment_information"><u>Payment Information</u></string>
+    <string name="prescription_label"><u>Prescription</u></string>
+
+    <string-array name="drug_type_array">
+        <item>Tablet</item>
+        <item>Syrup</item>
+        <item>Soap</item>
+        <item>Ointment</item>
+    </string-array>
 
 </resources>

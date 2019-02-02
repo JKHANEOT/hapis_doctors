@@ -3,6 +3,8 @@
  */
 package com.hapis.customer.ui.models.appointments;
 
+import android.content.Intent;
+
 import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
 import com.hapis.customer.ui.models.users.UserRequest;
 
@@ -41,6 +43,16 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 	private String patientRelation;
 
 	private Integer state;
+
+	private Integer paymentStatus;
+
+	private Integer paymentMode;
+
+	private String appointmentShortNote;
+
+	private Double appointmentFee;
+
+	private String mobileNumber;
 
 	public String getCustomerCode() {
 		return customerCode;
@@ -152,5 +164,45 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public Integer getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(Integer paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public Integer getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(Integer paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+
+	public String getAppointmentShortNote() {
+		return appointmentShortNote;
+	}
+
+	public void setAppointmentShortNote(String appointmentShortNote) {
+		this.appointmentShortNote = appointmentShortNote;
+	}
+
+	public Double getAppointmentFee() {
+		return appointmentFee;
+	}
+
+	public void setAppointmentFee(Double appointmentFee) {
+		this.appointmentFee = appointmentFee;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 }

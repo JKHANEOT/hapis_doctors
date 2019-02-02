@@ -10,12 +10,12 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/prescription_tv"
         android:textDirection="locale"
-        style="@style/bold_16sp"
-        android:text="Prescription"
+        style="@style/bold_14sp"
+        android:text="@string/prescription_label"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/app_dark_color"/>
 
     <LinearLayout
@@ -219,7 +219,7 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/prescription_rv"
+        android:id="@+id/prescription_documents_rv"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.hapis.customer.ui.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hapis.customer.R;
+import com.hapis.customer.networking.json.JSONAdaptor;
+import com.hapis.customer.ui.ConsultationActivity;
 import com.hapis.customer.ui.DashboardActivity;
 import com.hapis.customer.ui.adapters.UpComingSchedulesRecyclerViewAdapter;
 import com.hapis.customer.ui.adapters.datamodels.DateItem;
@@ -20,6 +23,7 @@ import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
 import com.hapis.customer.ui.custom.recyclerviewanimations.RecyclerviewClickListeners;
 import com.hapis.customer.ui.custom.recyclerviewanimations.animators.SlideInUpAnimator;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
+import com.hapis.customer.ui.utils.DialogIconCodes;
 import com.hapis.customer.ui.view.BaseView;
 import com.hapis.customer.ui.view.UpComingSchedulesFragmentView;
 import com.hapis.customer.ui.view.UpComingSchedulesFragmentViewModal;
@@ -158,6 +162,26 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
                     mAdapter.notifyDataSetChanged();
                 }
             }
+        }
+    }
+
+    @Override
+    public void viewClicked(AppointmentRequest appointmentRequest) {
+
+        //---------Get Patient Details : http://115.99.196.11:9000/customers/{customer_cd} : CustomerResponse -> CustomerRequest
+
+        String appointmentJson = null;
+        try {
+            appointmentJson = JSONAdaptor.toJSON(appointmentRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(appointmentJson != null && appointmentJson.length() > 0){
+            Intent intent = new Intent(getActivity(), ConsultationActivity.class);
+            intent.putExtra(ConsultationActivity.APPOINTMENT_DETAILS_TAG, appointmentJson);
+            getActivity().startActivity(intent);
+        }else{
+            ((DashboardActivity)getActivity()).showError("Appointment details not found.", null, getResources().getString(R.string.ok), null, DialogIconCodes.DIALOG_NOT_AVAILABLE.getIconCode());
         }
     }
 

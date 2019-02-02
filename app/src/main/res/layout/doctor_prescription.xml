@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/prescription_mail_rl"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/select_drug_type_spinner_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <com.hapis.customer.ui.custom.MaterialSpinner
+            android:id="@+id/select_drug_type_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:entries="@array/drug_type_array"
+            app:ms_alignLabels="true"
+            app:ms_arrowSize="14dp"
+            app:ms_baseColor="@color/colorPrimary"
+            app:ms_dropDownTitleColor="@color/app_dark_color"
+            app:ms_enableErrorLabel="true"
+            app:ms_enableFloatingLabel="true"
+            app:ms_errorColor="@color/error"
+            app:ms_floatingLabelColor="@color/hint_color"
+            app:ms_floatingLabelText="@string/select_drug_type"
+            app:ms_highlightColor="@color/colorPrimary"
+            app:ms_hint="@string/select_drug_type"
+            app:ms_hintColor="@color/hint_color"
+            app:ms_multiline="true"
+            app:ms_thickness=".5dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/select_drug_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.hapis.customer.ui.custom.materialedittext.MaterialEditText
+            android:id="@+id/select_drug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textDirection="locale"
+            android:hint="@string/select_drug"
+            android:cursorVisible="true"
+            android:clickable="true"
+            android:focusable="false"
+            android:textAllCaps="false"
+            android:textColorHint="@color/app_dark_color"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:drawableRight="@drawable/ic_dropdown_arrow_app_color_wrapper"
+            android:drawablePadding="5dp"
+            style="@style/semi_bold_14sp"
+            app:met_floatingLabelText="@string/drug"
+            app:met_baseColor="@color/app_dark_color"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelTextColor="@color/app_dark_color"
+            app:met_primaryColor="@color/app_dark_color"
+            app:met_textColor="@color/app_dark_color"
+            app:met_textColorHint="#616161"
+            app:met_underlineColor="@color/colorPrimary"
+            android:drawableEnd="@drawable/ic_dropdown_arrow_app_color_wrapper" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/morning_dose"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_morning"
+            android:scaleType="centerCrop"/>
+
+        <ToggleButton
+            android:id="@+id/morning_dose_toggleButton"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="@string/after_food"
+            android:textOff="@string/before_food"
+            android:background="@drawable/custom_toggle_button"
+            android:padding="@dimen/_6dp"
+            android:textColor="@color/white"
+            android:checked="false" />
+
+        <LinearLayout
+            android:id="@+id/select_morning_dose_spinner_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <com.hapis.customer.ui.custom.MaterialSpinner
+                android:id="@+id/select_morning_dose_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:ms_alignLabels="true"
+                app:ms_arrowSize="14dp"
+                app:ms_baseColor="@color/colorPrimary"
+                app:ms_dropDownTitleColor="@color/app_dark_color"
+                app:ms_enableErrorLabel="true"
+                app:ms_enableFloatingLabel="true"
+                app:ms_errorColor="@color/error"
+                app:ms_floatingLabelColor="@color/hint_color"
+                app:ms_floatingLabelText="@string/dose"
+                app:ms_highlightColor="@color/colorPrimary"
+                app:ms_hint="@string/select_dose"
+                app:ms_hintColor="@color/hint_color"
+                app:ms_multiline="true"
+                app:ms_thickness=".5dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/afternoon_dose"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_after_noon"
+            android:scaleType="centerCrop"/>
+
+        <ToggleButton
+            android:id="@+id/afternoon_dose_toggleButton"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="@string/after_food"
+            android:textOff="@string/before_food"
+            android:background="@drawable/custom_toggle_button"
+            android:padding="@dimen/_6dp"
+            android:textColor="@color/white"
+            android:checked="false" />
+
+        <LinearLayout
+            android:id="@+id/select_afternoon_dose_spinner_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <com.hapis.customer.ui.custom.MaterialSpinner
+                android:id="@+id/select_afternoon_dose_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:ms_alignLabels="true"
+                app:ms_arrowSize="14dp"
+                app:ms_baseColor="@color/colorPrimary"
+                app:ms_dropDownTitleColor="@color/app_dark_color"
+                app:ms_enableErrorLabel="true"
+                app:ms_enableFloatingLabel="true"
+                app:ms_errorColor="@color/error"
+                app:ms_floatingLabelColor="@color/hint_color"
+                app:ms_floatingLabelText="@string/dose"
+                app:ms_highlightColor="@color/colorPrimary"
+                app:ms_hint="@string/select_dose"
+                app:ms_hintColor="@color/hint_color"
+                app:ms_multiline="true"
+                app:ms_thickness=".5dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/night_dose"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ic_night"
+            android:scaleType="centerCrop"/>
+
+        <ToggleButton
+            android:id="@+id/night_dose_toggleButton"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="@string/after_food"
+            android:textOff="@string/before_food"
+            android:background="@drawable/custom_toggle_button"
+            android:padding="@dimen/_6dp"
+            android:textColor="@color/white"
+            android:checked="false" />
+
+        <LinearLayout
+            android:id="@+id/select_night_dose_spinner_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <com.hapis.customer.ui.custom.MaterialSpinner
+                android:id="@+id/select_night_dose_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                app:ms_alignLabels="true"
+                app:ms_arrowSize="14dp"
+                app:ms_baseColor="@color/colorPrimary"
+                app:ms_dropDownTitleColor="@color/app_dark_color"
+                app:ms_enableErrorLabel="true"
+                app:ms_enableFloatingLabel="true"
+                app:ms_errorColor="@color/error"
+                app:ms_floatingLabelColor="@color/hint_color"
+                app:ms_floatingLabelText="@string/dose"
+                app:ms_highlightColor="@color/colorPrimary"
+                app:ms_hint="@string/select_dose"
+                app:ms_hintColor="@color/hint_color"
+                app:ms_multiline="true"
+                app:ms_thickness=".5dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -212,7 +212,17 @@ public class UserProfileRepository {
                         UserProfileTable userProfileTable = userProfileDao.getUserProfileByMobileNumber(userName, password);
 
                         if(userProfileTable != null && userProfileTable.getUniqueId() != null && userProfileTable.getUniqueId().length() > 0) {
-                            applicationProfileDao.setAppProfileStatus(ApplicationConstants.USER_LOGGED_IN);
+
+                            LiveData<List<ApplicationProfileTable>> applicationProfile = applicationProfileDao.getAllApplicationProfile();
+
+                            if(applicationProfile != null && applicationProfile.getValue() != null && applicationProfile.getValue().size() > 0){
+                                applicationProfileDao.setAppProfileStatus(ApplicationConstants.USER_LOGGED_IN);
+                            }else{
+                                ApplicationProfileTable applicationProfileTable = new ApplicationProfileTable();
+                                applicationProfileTable.setAppStatus(ApplicationConstants.USER_LOGGED_IN);
+                                applicationProfileDao.insert(applicationProfileTable);
+                            }
+
                             AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
 
                             userProfileTable.setLastLoginDate(new Date().getTime());
@@ -229,6 +239,10 @@ public class UserProfileRepository {
 
                             mutableLiveData.postValue(userModelResponse);
                         }else{
+                            ApplicationProfileTable applicationProfileTable = new ApplicationProfileTable();
+                            applicationProfileTable.setAppStatus(ApplicationConstants.USER_LOGGED_IN);
+                            applicationProfileDao.insert(applicationProfileTable);
+
                             getUserDetails(mutableLiveData, userName, enterpriseCode, password);
                         }
                     } catch (Exception e) {

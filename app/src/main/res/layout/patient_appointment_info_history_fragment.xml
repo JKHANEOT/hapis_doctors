@@ -201,6 +201,7 @@
 
                     <LinearLayout
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -230,6 +231,23 @@
 
                     </LinearLayout>
 
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/input_patients_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/payment_info_ll"
+                        android:textDirection="locale"
+                        android:background="@drawable/textinputedittext_bg"
+                        android:focusable="false"
+                        android:gravity="start"
+                        android:hint="@string/patient_note"
+                        android:lines="2"
+                        android:ellipsize="end"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorHint="@color/md_grey_700"
+                        style="@style/semi_bold_10sp"/>
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -256,10 +274,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/payment_info_tv"
+                    android:textDirection="locale"
+                    style="@style/bold_14sp"
+                    android:text="@string/payment_information"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textColor="@color/app_dark_color"/>
+
                 <LinearLayout
                     android:id="@+id/payment_info_ll"
+                    android:layout_below="@+id/payment_info_tv"
                     android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -270,10 +300,10 @@
                         android:orientation="horizontal">
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/payment_info_lbl_tv"
+                            android:id="@+id/payment_mode_lbl_tv"
                             android:textDirection="locale"
-                            style="@style/bold_14sp"
-                            android:text="Payment : "
+                            style="@style/semi_bold_14sp"
+                            android:text="Payment Mode : "
                             android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -281,11 +311,11 @@
                             android:textColor="@color/app_dark_color"/>
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/payment_info_val_tv"
+                            android:id="@+id/payment_mode_val_tv"
                             android:layout_marginStart="10dp"
                             android:textDirection="locale"
                             style="@style/semi_bold_14sp"
-                            android:text="00.00"
+                            android:text="Not Defined"
                             android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -294,37 +324,78 @@
 
                     </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatButton
-                        android:id="@+id/payment_status_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="33.7dp"
-                        android:background="@drawable/payment_paid_rounded_button"
-                        android:stateListAnimator="@null"
-                        android:padding="5dp"
-                        android:text="@string/payment_pending"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/button_text_size"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
 
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="40"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/fee_lbl_tv"
+                                android:textDirection="locale"
+                                style="@style/semi_bold_14sp"
+                                android:text="Fee : "
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/fee_val_tv"
+                                android:layout_marginStart="10dp"
+                                android:textDirection="locale"
+                                style="@style/semi_bold_14sp"
+                                android:text="00.00"
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_color_transparent"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="60"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/status_lbl_tv"
+                                android:textDirection="locale"
+                                style="@style/semi_bold_14sp"
+                                android:text="Status : "
+                                android:gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAllCaps="false"
+                                android:textColor="@color/app_dark_color"/>
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/payment_status_button"
+                                android:layout_marginStart="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="33.7dp"
+                                android:background="@drawable/payment_paid_rounded_button"
+                                android:stateListAnimator="@null"
+                                android:padding="5dp"
+                                android:text="@string/payment_pending"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/button_text_size"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/input_patients_notes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/payment_info_ll"
-                    android:textDirection="locale"
-                    android:background="@drawable/textinputedittext_bg"
-                    android:focusable="false"
-                    android:layout_marginStart="5dp"
-                    android:gravity="start"
-                    android:hint="@string/patient_note"
-                    android:lines="4"
-                    android:ellipsize="end"
-                    android:padding="5dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="@color/md_grey_700"
-                    style="@style/semi_bold_12sp"/>
 
             </RelativeLayout>
 

@@ -20,99 +20,160 @@
         card_view:contentPadding="@dimen/card_view_content_padding"-->
 
         <RelativeLayout
-            android:id="@+id/item_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:paddingStart="15dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/hospital_icon_ll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:layout_alignParentStart="true">
-
-                <ImageView
-                    android:id="@+id/patient_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    card_view:srcCompat="@mipmap/default_profile_pic" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/details_ll"
+            <RelativeLayout
+                android:id="@+id/item_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".8"
-                android:orientation="vertical"
-                android:layout_toRightOf="@+id/hospital_icon_ll"
-                android:paddingLeft="@dimen/event_details_hor_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/event_details_hor_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:layout_toEndOf="@+id/hospital_icon_ll">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingStart="15dp">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:id="@+id/top_rl"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/patient_name_title_tv"
-                        android:textDirection="locale"
+                    <LinearLayout
+                        android:id="@+id/hospital_icon_ll"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:id="@+id/patient_icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            card_view:srcCompat="@mipmap/default_profile_pic" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/details_ll"
                         android:layout_width="match_parent"
-                        android:padding="5dp"
-                        android:minLines="1"
-                        android:text="Patient Name"
-                        android:textColor="#131c2e"
-                        style="@style/semi_bold_12sp"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@+id/hospital_icon_ll"
+                        android:paddingLeft="@dimen/event_details_hor_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingStart="@dimen/event_details_hor_margin"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:layout_toEndOf="@+id/hospital_icon_ll">
+
+                        <TextView
+                            android:id="@+id/patient_name_title_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:text="Patient Name"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"/>
+
+                        <TextView
+                            android:id="@+id/patient_gender_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:text="Patient Gender"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"/>
+
+
+                        <TextView
+                            android:id="@+id/appointment_date_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"
+                            android:text="Appointment date" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/separator_line_view"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_alignBottom="@+id/details_ll"
+                        android:layout_alignTop="@+id/details_ll"
+                        android:background="@color/app_dark_color"
+                        android:layout_toRightOf="@+id/hospital_icon_ll"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_toEndOf="@+id/hospital_icon_ll" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/consultation_status_indicator_iv"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/not_yet_consulted_indicator"
+                        android:layout_alignParentEnd="true" />
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/appointment_date_tv"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/bottom_rl"
+                android:layout_below="@+id/item_lay"
+                android:layout_width="match_parent"
+                android:background="@drawable/bottom_cornor_drawable"
+                android:weightSum="100"
+                android:gravity="center_vertical"
+                android:layout_height="50dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/cancel_consultation_tv"
                     android:textDirection="locale"
+                    style="@style/bold_16sp"
+                    android:text="@string/cancel"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:padding="5dp"
-                    android:minLines="1"
-                    android:textColor="#131c2e"
-                    style="@style/semi_bold_12sp"
-                    android:text="Appointment date" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/reschedule_consultation_tv"
+                    android:textDirection="locale"
+                    style="@style/bold_16sp"
+                    android:text="@string/reschedule"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"/>
 
             </LinearLayout>
-
-            <View
-                android:id="@+id/separator_line_view"
-                android:layout_width="1dp"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@+id/details_ll"
-                android:layout_alignTop="@+id/details_ll"
-                android:background="@color/app_dark_color"
-                android:layout_toRightOf="@+id/hospital_icon_ll"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_toEndOf="@+id/hospital_icon_ll" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/consultation_status_indicator_iv"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/not_yet_consulted_indicator"
-                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
