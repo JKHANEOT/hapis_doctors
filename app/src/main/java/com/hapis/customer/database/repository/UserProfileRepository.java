@@ -67,6 +67,10 @@ public class UserProfileRepository {
         new GetAppProfileStatusAsyncTask(appStatus, applicationProfileDao).execute();
     }
 
+    public UserProfileTable getUserProfile() {
+        return userProfileDao.getUserProfileByUniqueId(AccessPreferences.get(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, null));
+    }
+
     private static class GetAppProfileStatusAsyncTask extends AsyncTask<Void, Void, Integer> {
 
         private ApplicationProfileDao applicationProfileDao;
@@ -322,6 +326,7 @@ public class UserProfileRepository {
                                     UserProfileTable userProfileTable = new UserProfileTable();
 
                                     userProfileTable.setUniqueId(userRequest.getUserCode());
+                                    AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
                                     userProfileTable.setEnterpriseCode(userRequest.getEnterpriseCode());
                                     userProfileTable.setRoles(userRequest.getRoles());
                                     userProfileTable.setTitle(userRequest.getNamePrefix());

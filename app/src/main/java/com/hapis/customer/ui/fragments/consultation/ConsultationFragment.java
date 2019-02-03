@@ -1,4 +1,4 @@
-package com.hapis.customer.ui.fragments;
+package com.hapis.customer.ui.fragments.consultation;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,14 +15,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.hapis.customer.R;
+import com.hapis.customer.ui.BaseFragmentActivity;
 import com.hapis.customer.ui.ConsultationActivity;
+import com.hapis.customer.ui.callback.CommonSearchCallBack;
+import com.hapis.customer.ui.fragments.BaseAbstractFragment;
+import com.hapis.customer.ui.fragments.CommonSearchDialogFragment;
+import com.hapis.customer.ui.fragments.SelectPreferredLocationDialogFragment;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
+import com.hapis.customer.ui.models.consultation.Drug;
+import com.hapis.customer.ui.models.enums.MasterDataUtils;
 import com.hapis.customer.ui.models.enums.PaymentMode;
 import com.hapis.customer.ui.models.enums.PaymentStatus;
 import com.hapis.customer.ui.view.BaseView;
 import com.hapis.customer.ui.view.ConsultationFragmentView;
 import com.hapis.customer.ui.view.ConsultationFragmentViewModal;
 import com.hapis.customer.utils.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragmentViewModal> implements ConsultationFragmentView {
 
@@ -52,6 +62,19 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
     private LinearLayout patient_appointment_history_info_rl;
     private AppCompatTextView appointment_day_tv, appointment_date_tv, appointment_month_year_tv, appointment_time_tv, appointment_doctor_notes_tv, appointment_fees_tv;
     private AppCompatImageView view_appointment_details_iv;
+
+    private List<Drug> mPrescription = new ArrayList<>();
+
+    public void setPrescription(List<Drug> prescription) {
+        mPrescription = prescription;
+        if(mPrescription != null && mPrescription.size() > 0){
+            input_doctor_prescription.setText("");
+            added_prescription_rl.setVisibility(View.VISIBLE);
+        }else{
+            added_prescription_rl.setVisibility(View.GONE);
+            input_doctor_prescription.setText("");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +112,7 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         add_prescription_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loadPrescription();
             }
         });
 
@@ -108,7 +131,7 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         edit_prescription_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loadPrescription();
             }
         });
 
@@ -116,7 +139,7 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         delete_prescription_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setPrescription(null);
             }
         });
 
@@ -156,6 +179,18 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         new LoadPatientInformation().execute(((ConsultationActivity)getActivity()).getAppointmentRequest());
 
         return v;
+    }
+
+    private void loadPrescription() {
+        ConsultationPrescriptionDialogFragment dialog =
+                ConsultationPrescriptionDialogFragment.newInstance(((ConsultationActivity) getActivity()), new DoctorPrescriptionDialogFragmentCallBack() {
+                    @Override
+                    public void updateSelectedValue(List<Drug> prescriptionList) {
+                        setPrescription(prescriptionList);
+                    }
+                }, mPrescription, getResources().getString(R.string.prescription));
+        dialog.setCancelable(false);
+        dialog.show(getActivity().getSupportFragmentManager(), ConsultationPrescriptionDialogFragment.TAG);
     }
 
     class LoadPatientInformation extends AsyncTask<AppointmentRequest, Void, Void>{

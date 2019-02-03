@@ -9,16 +9,18 @@
         android:id="@+id/select_drug_type_spinner_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:weightSum="1">
 
         <com.hapis.customer.ui.custom.MaterialSpinner
             android:id="@+id/select_drug_type_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight=".6"
             android:background="@android:color/transparent"
             android:entries="@array/drug_type_array"
             app:ms_alignLabels="true"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:ms_arrowSize="14dp"
             app:ms_baseColor="@color/colorPrimary"
             app:ms_dropDownTitleColor="@color/app_dark_color"
@@ -26,12 +28,44 @@
             app:ms_enableFloatingLabel="true"
             app:ms_errorColor="@color/error"
             app:ms_floatingLabelColor="@color/hint_color"
-            app:ms_floatingLabelText="@string/select_drug_type"
+            app:ms_floatingLabelText="@string/drug_type"
             app:ms_highlightColor="@color/colorPrimary"
             app:ms_hint="@string/select_drug_type"
             app:ms_hintColor="@color/hint_color"
             app:ms_multiline="true"
             app:ms_thickness=".5dp"/>
+
+        <LinearLayout
+            android:id="@+id/input_lay_period"
+            android:layout_width="0dp"
+            android:layout_weight=".4"
+            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <com.hapis.customer.ui.custom.materialedittext.MaterialEditText
+                android:id="@+id/input_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textDirection="locale"
+                android:hint="@string/number_of_days"
+                android:maxLines="1"
+                android:inputType="number"
+                android:maxLength="3"
+                android:textAllCaps="false"
+                android:textColorHint="@color/app_dark_color"
+                style="@style/semi_bold_14sp"
+                app:met_baseColor="@color/app_dark_color"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/number_of_days"
+                app:met_floatingLabelTextColor="@color/app_dark_color"
+                app:met_primaryColor="@color/app_dark_color"
+                app:met_textColor="@color/app_dark_color"
+                app:met_textColorHint="@color/app_dark_color"
+                app:met_underlineColor="@color/black"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -94,7 +128,7 @@
             android:background="@drawable/custom_toggle_button"
             android:padding="@dimen/_6dp"
             android:textColor="@color/white"
-            android:checked="false" />
+            android:checked="true" />
 
         <LinearLayout
             android:id="@+id/select_morning_dose_spinner_ll"
@@ -104,6 +138,7 @@
 
             <com.hapis.customer.ui.custom.MaterialSpinner
                 android:id="@+id/select_morning_dose_spinner"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -151,7 +186,7 @@
             android:background="@drawable/custom_toggle_button"
             android:padding="@dimen/_6dp"
             android:textColor="@color/white"
-            android:checked="false" />
+            android:checked="true" />
 
         <LinearLayout
             android:id="@+id/select_afternoon_dose_spinner_ll"
@@ -161,6 +196,7 @@
 
             <com.hapis.customer.ui.custom.MaterialSpinner
                 android:id="@+id/select_afternoon_dose_spinner"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -208,7 +244,7 @@
             android:background="@drawable/custom_toggle_button"
             android:padding="@dimen/_6dp"
             android:textColor="@color/white"
-            android:checked="false" />
+            android:checked="true" />
 
         <LinearLayout
             android:id="@+id/select_night_dose_spinner_ll"
@@ -218,6 +254,7 @@
 
             <com.hapis.customer.ui.custom.MaterialSpinner
                 android:id="@+id/select_night_dose_spinner"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

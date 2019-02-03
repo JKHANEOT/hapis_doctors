@@ -1766,6 +1766,14 @@
     <string name="dose">Dose</string>
     <string name="payment_information"><u>Payment Information</u></string>
     <string name="prescription_label"><u>Prescription</u></string>
+    <string name="number_of_days">Number of days</string>
+    <string name="no_medicine_added_use_add_button_to_start">No medicine added, use add button to start.</string>
+    <string name="please_select_medicine_type">Please select medicine type</string>
+    <string name="please_enter_number_of_days">Please enter number of days</string>
+    <string name="please_select_medicine">Please select medicine</string>
+    <string name="please_select_dose">Please select dose</string>
+    <string name="add_medicine">Add Medicine</string>
+    <string name="edit_medicine">Edit Medicine</string>
 
     <string-array name="drug_type_array">
         <item>Tablet</item>

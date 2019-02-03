@@ -74,4 +74,55 @@ public class MasterDataUtils {
 
         return specialisations;
     }
+
+    public static List<String> getPrescription(String specialisation, String drugType){
+        List<String> prescriptions = new ArrayList<>();
+
+        if(specialisation.equalsIgnoreCase("Paediatric")){
+//            https://www.verywellhealth.com/the-30-most-prescribed-drugs-in-pediatrics-2633435
+            if(drugType.equalsIgnoreCase("Tablet")){
+                prescriptions.add("Azithromycin");
+                prescriptions.add("Amoxicillin/Clavulanate");
+                prescriptions.add("Promethazine");
+            }else if(drugType.equalsIgnoreCase("Syrup")){
+                prescriptions.add("Albuterol");
+                prescriptions.add("Prednisolone Sodium Phosphate");
+                prescriptions.add("Dextromethorphan/Phenylephrine");
+                prescriptions.add("Promethazine");
+            }else if(drugType.equalsIgnoreCase("Soap")){
+                prescriptions.add("Himalaya Gentle");
+                prescriptions.add("Johnson's");
+                prescriptions.add("Olemessa");
+            }else if(drugType.equalsIgnoreCase("Ointment")){
+                prescriptions.add("Fluticasone");
+                prescriptions.add("Mupirocin");
+                prescriptions.add("Mometasone");
+                prescriptions.add("Triamcinolone");
+                prescriptions.add("Hydrocortisone");
+            }
+        }else{
+            if(drugType.equalsIgnoreCase("Tablet")){
+                prescriptions.add("Azithromycin");
+                prescriptions.add("Amoxicillin/Clavulanate");
+                prescriptions.add("Promethazine");
+            }else if(drugType.equalsIgnoreCase("Syrup")){
+                prescriptions.add("Albuterol");
+                prescriptions.add("Prednisolone Sodium Phosphate");
+                prescriptions.add("Dextromethorphan/Phenylephrine");
+                prescriptions.add("Promethazine");
+            }else if(drugType.equalsIgnoreCase("Soap")){
+                prescriptions.add("Himalaya Gentle");
+                prescriptions.add("Johnson's");
+                prescriptions.add("Olemessa");
+            }else if(drugType.equalsIgnoreCase("Ointment")){
+                prescriptions.add("Fluticasone");
+                prescriptions.add("Mupirocin");
+                prescriptions.add("Mometasone");
+                prescriptions.add("Triamcinolone");
+                prescriptions.add("Hydrocortisone");
+            }
+        }
+
+        return prescriptions;
+    }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.hapis.customer.R;
 import com.hapis.customer.networking.json.JSONAdaptor;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
-import com.hapis.customer.ui.fragments.ConsultationFragment;
+import com.hapis.customer.ui.fragments.consultation.ConsultationFragment;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
 import com.hapis.customer.ui.utils.AlertUtil;
 import com.hapis.customer.ui.utils.DialogIconCodes;

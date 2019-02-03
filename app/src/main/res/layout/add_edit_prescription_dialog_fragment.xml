@@ -14,7 +14,7 @@
         android:paddingBottom="@dimen/margin"
         android:paddingTop="@dimen/margin">
 
-        <!--<android.support.v7.widget.AppCompatImageView
+       <!-- <android.support.v7.widget.AppCompatImageView
             android:id="@+id/close_action_button_iv"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -57,12 +57,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/prescription"
             android:textAllCaps="false"
             android:textColor="@color/md_white_1000" />
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/action_button_done_iv"
+            android:id="@+id/action_button_clear_iv"
             android:layout_toStartOf="@+id/action_button_iv"
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
@@ -73,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/ic_dialog_tick_mark_white"
+            app:srcCompat="@drawable/ic_white_clear"
             android:scaleType="centerCrop"/>
 
         <android.support.v7.widget.AppCompatImageView
@@ -88,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/ic_add_prescriptions"
+            app:srcCompat="@drawable/ic_dialog_tick_mark_white"
             android:scaleType="centerCrop"/>
     </RelativeLayout>
 
@@ -99,31 +98,14 @@
         android:layout_below="@id/nav_header_container">
 
         <RelativeLayout
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/no_medicines_added_tv"
-                android:visibility="gone"
-                style="@style/bold_20sp"
-                android:gravity="center"
-                android:layout_width="match_parent"
+            <include layout="@layout/doctor_prescription"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/no_medicine_added_use_add_button_to_start"
-                android:textAllCaps="false"
-                android:textColor="@color/app_color" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/prescription_rv"
-                android:layout_below="@+id/prescription_mail_rl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_width="match_parent"/>
 
         </RelativeLayout>
 

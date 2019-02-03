@@ -27,6 +27,8 @@ public abstract class Drug extends MessageModel {
 	
 	private String beforeNightDose;
 
+	private Integer noOfDays;
+
 	public String getMorningDose() {
 		return morningDose;
 	}
@@ -81,6 +83,14 @@ public abstract class Drug extends MessageModel {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getNoOfDays() {
+		return noOfDays;
+	}
+
+	public void setNoOfDays(Integer noOfDays) {
+		this.noOfDays = noOfDays;
 	}
 
 	@Override

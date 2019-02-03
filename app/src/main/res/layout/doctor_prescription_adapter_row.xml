@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/item_card_lay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        card_view:cardElevation="0dp"
+        card_view:cardBackgroundColor="@color/new_ui_white"
+        card_view:cardCornerRadius="8dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+
+        <!--card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="@dimen/card_view_content_padding"-->
+
+        <RelativeLayout
+            android:background="@drawable/prescription_row_cornor_drawable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/item_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/top_rl"
+                    android:clickable="true"
+                   android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/medicine_icon_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:id="@+id/prescription_icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            card_view:srcCompat="@drawable/ic_prescription" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/details_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".8"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@+id/separator_line_view"
+                        android:paddingLeft="@dimen/event_details_hor_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingStart="@dimen/event_details_hor_margin"
+                        android:paddingEnd="@dimen/activity_horizontal_margin"
+                        android:layout_toEndOf="@+id/hospital_icon_ll">
+
+                        <TextView
+                            android:id="@+id/prescription_name_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"/>
+
+                        <TextView
+                            android:id="@+id/prescription_description_usage_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"/>
+
+
+                        <TextView
+                            android:id="@+id/prescription_days_tv"
+                            android:textDirection="locale"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:padding="5dp"
+                            android:minLines="1"
+                            android:textColor="#131c2e"
+                            style="@style/semi_bold_12sp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/separator_line_view"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_alignBottom="@+id/details_ll"
+                        android:layout_alignTop="@+id/details_ll"
+                        android:background="@color/app_dark_color"
+                        android:layout_toRightOf="@+id/medicine_icon_ll"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_toEndOf="@+id/hospital_icon_ll" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/bottom_rl"
+                android:layout_below="@+id/item_lay"
+                android:layout_width="match_parent"
+                android:background="@drawable/bottom_cornor_drawable"
+                android:weightSum="100"
+                android:gravity="center_vertical"
+                android:layout_height="30dp">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/delete_prescription_tv"
+                    android:textDirection="locale"
+                    style="@style/bold_16sp"
+                    android:text="@string/delete"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/edit_prescription_tv"
+                    android:textDirection="locale"
+                    style="@style/bold_16sp"
+                    android:text="@string/edit"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="50"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
