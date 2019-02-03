@@ -131,7 +131,6 @@ public class ConsultationPrescriptionDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mDoctorPrescriptionDialogFragmentCallBack.updateSelectedValue(mPrescriptionList);
-                dismiss();
             }
         });
 

@@ -92,41 +92,33 @@
             android:scaleType="centerCrop"/>
     </RelativeLayout>
 
-    <ScrollView
+    <RelativeLayout
+        android:layout_below="@id/nav_header_container"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:layout_below="@id/nav_header_container">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_margin="10dp"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/no_medicines_added_tv"
+            android:visibility="gone"
+            style="@style/bold_20sp"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/no_medicine_added_use_add_button_to_start"
+            android:textAllCaps="false"
+            android:textColor="@color/app_color" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/no_medicines_added_tv"
-                android:visibility="gone"
-                style="@style/bold_20sp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/no_medicine_added_use_add_button_to_start"
-                android:textAllCaps="false"
-                android:textColor="@color/app_color" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/prescription_rv"
+            android:layout_below="@+id/prescription_mail_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/prescription_rv"
-                android:layout_below="@+id/prescription_mail_rl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
-
-        </RelativeLayout>
-
-    </ScrollView>
-
+    </RelativeLayout>
 </RelativeLayout>

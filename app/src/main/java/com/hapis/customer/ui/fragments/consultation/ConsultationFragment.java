@@ -15,15 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.hapis.customer.R;
-import com.hapis.customer.ui.BaseFragmentActivity;
 import com.hapis.customer.ui.ConsultationActivity;
-import com.hapis.customer.ui.callback.CommonSearchCallBack;
 import com.hapis.customer.ui.fragments.BaseAbstractFragment;
-import com.hapis.customer.ui.fragments.CommonSearchDialogFragment;
-import com.hapis.customer.ui.fragments.SelectPreferredLocationDialogFragment;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
 import com.hapis.customer.ui.models.consultation.Drug;
-import com.hapis.customer.ui.models.enums.MasterDataUtils;
 import com.hapis.customer.ui.models.enums.PaymentMode;
 import com.hapis.customer.ui.models.enums.PaymentStatus;
 import com.hapis.customer.ui.view.BaseView;
@@ -66,14 +61,29 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
     private List<Drug> mPrescription = new ArrayList<>();
 
     public void setPrescription(List<Drug> prescription) {
-        mPrescription = prescription;
-        if(mPrescription != null && mPrescription.size() > 0){
+        if(prescription != null && prescription.size() > 0){
+            mPrescription = new ArrayList<>();
+            mPrescription.addAll(prescription);
+
             input_doctor_prescription.setText("");
+            input_doctor_prescription.setText(getPrescriptionSummary());
             added_prescription_rl.setVisibility(View.VISIBLE);
         }else{
+            mPrescription = null;
             added_prescription_rl.setVisibility(View.GONE);
             input_doctor_prescription.setText("");
         }
+    }
+
+    private String getPrescriptionSummary(){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(final Drug drug : mPrescription){
+            final int noOfDays = drug.getNoOfDays();
+            stringBuilder.append(drug.getName() +" for "+String.valueOf(noOfDays)+(noOfDays > 1 ? " days" : " days")+ " \n");
+        }
+
+        return stringBuilder.toString();
     }
 
     @Override
@@ -181,11 +191,15 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         return v;
     }
 
+    private ConsultationPrescriptionDialogFragment dialog;
+
     private void loadPrescription() {
-        ConsultationPrescriptionDialogFragment dialog =
+        dialog =
                 ConsultationPrescriptionDialogFragment.newInstance(((ConsultationActivity) getActivity()), new DoctorPrescriptionDialogFragmentCallBack() {
                     @Override
                     public void updateSelectedValue(List<Drug> prescriptionList) {
+                        dialog.dismiss();
+                        dialog = null;
                         setPrescription(prescriptionList);
                     }
                 }, mPrescription, getResources().getString(R.string.prescription));
