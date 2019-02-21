@@ -229,9 +229,9 @@
 
     <string-array name="menu_more_labels">
         <item>@string/my_profile</item>
-        <item>@string/my_address</item>
-        <item>@string/nav_item_orders</item>
-        <item>@string/nav_item_payments</item>
+        <!--<item>@string/my_address</item>-->
+        <!--<item>@string/nav_item_orders</item>-->
+        <!--<item>@string/nav_item_payments</item>-->
         <!--<item>@string/nav_item_refernearn</item>-->
         <item>@string/nav_item_send_feedback</item>
         <item>@string/nav_item_help_and_support</item>
@@ -1781,5 +1781,11 @@
         <item>Soap</item>
         <item>Ointment</item>
     </string-array>
+
+    <string name="do_you_wish_to_logout">Do you wish to logout ?</string>
+    <string name="logged_out">Logged Out</string>
+    <string name="user_logout_not_possible_please_try_later">User logout not possible, please try later.</string>
+    <string name="update_profile_successful">Update profile successful.</string>
+    <string name="payment">Payment :</string>
 
 </resources>

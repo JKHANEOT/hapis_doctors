@@ -27,7 +27,6 @@ import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.AccessPreferences;
 import com.hapis.customer.ui.utils.ApplicationConstants;
 import com.hapis.customer.ui.utils.EditTextUtils;
-import com.hapis.customer.ui.view.UpComingSchedulesFragmentViewModal;
 import com.hapis.customer.utils.DateUtil;
 
 import java.io.IOException;
@@ -1066,5 +1065,4 @@ public class AppointmentRepository {
             mutableLiveData.postValue(userModelResponse);
         }
     }
-
 }

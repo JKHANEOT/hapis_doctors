@@ -160,7 +160,7 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                long[] checkInAndOut = ((ConsultationActivity)getActivity()).getCheckInAndOut();
             }
         });
 

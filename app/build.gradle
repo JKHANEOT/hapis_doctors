@@ -85,6 +85,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/commons-io-2.5.jar')
+    implementation files('libs/joda-time-2.2.jar')
     implementation 'com.google.code.gson:gson:2.8.1'
 
     implementation 'com.android.support:multidex:1.0.3'

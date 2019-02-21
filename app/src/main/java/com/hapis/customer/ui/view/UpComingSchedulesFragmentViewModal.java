@@ -42,10 +42,10 @@ public class UpComingSchedulesFragmentViewModal extends BaseViewModal<UpComingSc
     private GetAppointmentDoctorDetailsCallBack getAppointmentDetailsCallBack;
     private GetAppointmentEnterpriseDetailsCallBack getAppointmentEnterpriseDetailsCallBack;
 
-    public void getUpcomingAppointments(){
+    public void getUpcomingAppointments(Date appointmentsDateToFetch){
         MutableLiveData<AppointmentResponseList> mutableLiveData = new MutableLiveData<>();
 
-        final String appointmentDate = DateUtil.convertDateToDateStr(new Date(), DateUtil.DATE_FORMAT_dd_MM_yyyy_SEP_HIPHEN);
+        final String appointmentDate = DateUtil.convertDateToDateStr(appointmentsDateToFetch, DateUtil.DATE_FORMAT_dd_MM_yyyy_SEP_HIPHEN);
 
         appointmentRepository.new GetAppointmentsForDoctorTask(mutableLiveData, appointmentDate).execute();
         mutableLiveData.observe(mOwner, new Observer<AppointmentResponseList>() {

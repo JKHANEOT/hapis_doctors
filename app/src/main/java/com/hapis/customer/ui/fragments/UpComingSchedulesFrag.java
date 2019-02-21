@@ -3,16 +3,20 @@ package com.hapis.customer.ui.fragments;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hapis.customer.R;
 import com.hapis.customer.networking.json.JSONAdaptor;
+import com.hapis.customer.ui.BaseFragmentActivity;
 import com.hapis.customer.ui.ConsultationActivity;
 import com.hapis.customer.ui.DashboardActivity;
 import com.hapis.customer.ui.adapters.UpComingSchedulesRecyclerViewAdapter;
@@ -31,6 +35,7 @@ import com.hapis.customer.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -44,6 +49,10 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
     private RecyclerView upcoming_appointments_rv;
     private UpComingSchedulesRecyclerViewAdapter mAdapter;
 
+    private LinearLayout previous_date_ll, next_date_ll;
+    private TextView date_tv;
+    private AppCompatImageView previous_date_bttn, next_date_bttn;
+
     public UpComingSchedulesFrag() {
         // Required empty public constructor
     }
@@ -52,6 +61,23 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_up_coming_schedules, container, false);
+
+        previous_date_ll = v.findViewById(R.id.previous_date_ll);
+        previous_date_ll.setOnClickListener(previous_date_OnClickListener);
+
+        previous_date_bttn = v.findViewById(R.id.previous_date_bttn);
+        next_date_bttn = v.findViewById(R.id.next_date_bttn);
+
+        next_date_ll = v.findViewById(R.id.next_date_ll);
+        next_date_ll.setOnClickListener(next_date_OnClickListener);
+
+        date_tv = v.findViewById(R.id.date_tv);
+
+        currentDate = DateUtil.normalizeTime(new Date());
+
+        selectedDate = DateUtil.normalizeTime(new Date());
+
+        date_tv.setText(DateUtil.convertDateToDateStr(selectedDate, DateUtil.DATE_FORMAT_MMM_dd_yyyy));
 
         upcoming_appointments_rv = v.findViewById(R.id.upcoming_appointments_rv);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -66,11 +92,56 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
         return v;
     }
 
+    private Date selectedDate, currentDate;
+
+    private View.OnClickListener previous_date_OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            selectedDate = DateUtil.addOrSubtractDays(selectedDate, -1);
+            selectedDate = DateUtil.normalizeTime(selectedDate);
+
+            if(currentDate.compareTo(selectedDate) == 0){
+                previous_date_bttn.setImageDrawable(getResources().getDrawable(R.drawable.ic_curved_arrow_left_transparent_white));
+                date_tv.setText(DateUtil.convertDateToDateStr(selectedDate, DateUtil.DATE_FORMAT_MMM_dd_yyyy));
+
+                initAndGetUpcomingAppointments(selectedDate);
+            }else if(selectedDate.compareTo(currentDate) > 0){
+                previous_date_bttn.setImageDrawable(getResources().getDrawable(R.drawable.ic_curved_arrow_left_white));
+                date_tv.setText(DateUtil.convertDateToDateStr(selectedDate, DateUtil.DATE_FORMAT_MMM_dd_yyyy));
+
+                initAndGetUpcomingAppointments(selectedDate);
+            }else{
+                selectedDate = DateUtil.addOrSubtractDays(selectedDate, 1);
+                selectedDate = DateUtil.normalizeTime(selectedDate);
+            }
+        }
+    };
+
+    private View.OnClickListener next_date_OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            selectedDate = DateUtil.addOrSubtractDays(selectedDate, 1);
+            selectedDate = DateUtil.normalizeTime(selectedDate);
+            date_tv.setText(DateUtil.convertDateToDateStr(selectedDate, DateUtil.DATE_FORMAT_MMM_dd_yyyy));
+
+            if(selectedDate.compareTo(currentDate) > 0)
+                previous_date_bttn.setImageDrawable(getResources().getDrawable(R.drawable.ic_curved_arrow_left_white));
+
+            initAndGetUpcomingAppointments(selectedDate);
+        }
+    };
+
     @Override
     public void onResume() {
         super.onResume();
 
-        mViewModal.getUpcomingAppointments();
+        initAndGetUpcomingAppointments(selectedDate);
+    }
+
+    private void initAndGetUpcomingAppointments(Date appointmentsDateToFetch){
+        ((BaseFragmentActivity)getActivity()).showProgressDialog(getActivity(), getResources().getString(R.string.loading_items));
+        mViewModal.getUpcomingAppointments(appointmentsDateToFetch);
     }
 
     @Override
@@ -85,11 +156,13 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
 
     @Override
     public void showError(String errorMsg, OnClickListener onClickListener, String positiveLbl, String negativeLbl, String status) {
+        ((BaseFragmentActivity)getActivity()).dismissProgressDialog();
         ((DashboardActivity)getActivity()).showError(errorMsg, onClickListener, positiveLbl, negativeLbl, status);
     }
 
     @Override
     public void failedToProcess(String errorMsg) {
+        ((BaseFragmentActivity)getActivity()).dismissProgressDialog();
         list_empty_tv.setVisibility(View.VISIBLE);
         upcoming_appointments_rv.setVisibility(View.GONE);
     }
@@ -135,7 +208,7 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
                     for (String date : groupedHashmap.keySet()) {
                         DateItem dateItem = new DateItem();
                         dateItem.setDate(date);
-                        consolidatedList.add(dateItem);
+//                        consolidatedList.add(dateItem);
 
                         List<AppointmentRequest> individualPaymentHistoryList = groupedHashmap.get(date);
 
@@ -153,6 +226,7 @@ public class UpComingSchedulesFrag extends BaseAbstractFragment<UpComingSchedule
 
         @Override
         protected void onPostExecute(List<GroupDataListItem> consolidatedList) {
+            ((BaseFragmentActivity)getActivity()).dismissProgressDialog();
             if (consolidatedList != null && consolidatedList.size() > 0) {
                 if (upcoming_appointments_rv != null) {
                     upcoming_appointments_rv.setVisibility(View.VISIBLE);

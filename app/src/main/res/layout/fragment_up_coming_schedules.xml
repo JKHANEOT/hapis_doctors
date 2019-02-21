@@ -3,8 +3,99 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/padding_twenty"
     tools:context=".ui.fragments.UpComingSchedulesFrag">
+
+    <RelativeLayout
+        android:id="@+id/calendar_head_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <View
+            android:background="#eeeeee"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/previous_date_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/previous_date_bttn"
+                android:layout_width="16dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                app:srcCompat="@drawable/ic_curved_arrow_left_transparent_white"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/left_sep"
+            android:layout_toRightOf="@+id/previous_date_ll"
+            android:background="#eeeeee"
+            android:layout_width="1.7dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/previous_date_ll" />
+
+        <View
+            android:id="@+id/right_sep"
+            android:layout_toLeftOf="@+id/next_date_ll"
+            android:background="#eeeeee"
+            android:layout_width="1.7dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/next_date_ll" />
+
+        <LinearLayout
+            android:id="@+id/next_date_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/next_date_bttn"
+                android:layout_width="16dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_curved_arrow_right_white"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/date_tv"
+            android:textDirection="locale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/right_sep"
+            android:layout_toRightOf="@+id/left_sep"
+            android:layout_centerVertical="true"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            style="@style/semi_bold_16sp"
+            android:layout_toEndOf="@+id/left_sep"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@+id/right_sep" />
+    </RelativeLayout>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/list_empty_tv"
@@ -19,6 +110,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/upcoming_appointments_rv"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/calendar_head_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

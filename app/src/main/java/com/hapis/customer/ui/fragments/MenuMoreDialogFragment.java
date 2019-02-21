@@ -38,9 +38,9 @@ public class MenuMoreDialogFragment extends DialogFragment {
     private static String[] titles = null;
     private static int[] icons = {
             R.drawable.ic_my_profile,
-            R.drawable.ic_my_address,
-            R.drawable.ic_my_orders,
-            R.drawable.ic_payments_icon,
+//            R.drawable.ic_my_address,
+//            R.drawable.ic_my_orders,
+//            R.drawable.ic_payments_icon,
             /*R.drawable.ic_funding,*/
             R.drawable.ic_feedback,
             R.drawable.ic_help_support,
@@ -129,7 +129,10 @@ public class MenuMoreDialogFragment extends DialogFragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(baseFragmentActivity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                menuMoreOnCallBackListener.onOptionSelected(getDialog(), position);
+                if(menuMoreOnCallBackListener != null) {
+                    menuMoreOnCallBackListener.onOptionSelected(getDialog(), position);
+                    menuMoreOnCallBackListener = null;
+                }
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.hapis.customer.ui.adapters;
 
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.hapis.customer.ui.adapters.datamodels.DateItem;
 import com.hapis.customer.ui.adapters.datamodels.GroupDataGeneralItem;
 import com.hapis.customer.ui.adapters.datamodels.GroupDataListItem;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
+import com.hapis.customer.ui.models.enums.PaymentStatus;
 import com.hapis.customer.ui.utils.HapisSlotUtils;
 
 import java.util.ArrayList;
@@ -147,6 +149,16 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
 
                 generalViewHolder.appointment_date_tv.setText(stringBuilder.toString());
 
+                if(appointmentRequest.getPaymentStatus() != null){
+                    if(appointmentRequest.getPaymentStatus().intValue() == PaymentStatus.PENDING.code().intValue()){
+                        generalViewHolder.payment_status_button.setText(HapisApplication.getApplication().getResources().getString(R.string.payment_pending));
+                        generalViewHolder.payment_status_button.setBackgroundDrawable(HapisApplication.getApplication().getResources().getDrawable(R.drawable.payment_pending_rounded_button));
+                    }else if(appointmentRequest.getPaymentStatus().intValue() == PaymentStatus.PAID.code().intValue()){
+                        generalViewHolder.payment_status_button.setText(HapisApplication.getApplication().getResources().getString(R.string.payment_paid));
+                        generalViewHolder.payment_status_button.setBackgroundDrawable(HapisApplication.getApplication().getResources().getDrawable(R.drawable.payment_paid_rounded_button));
+                    }
+                }
+
                 break;
             }
 
@@ -183,6 +195,7 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
         private RelativeLayout top_rl;
         private LinearLayout bottom_rl;
         private AppCompatTextView reschedule_consultation_tv, cancel_consultation_tv;
+        private AppCompatButton payment_status_button;
 
         public GeneralViewHolder(View v) {
             super(v);
@@ -197,6 +210,8 @@ public class UpComingSchedulesRecyclerViewAdapter extends RecyclerView.Adapter<R
             bottom_rl = v.findViewById(R.id.bottom_rl);
             reschedule_consultation_tv = v.findViewById(R.id.reschedule_consultation_tv);
             cancel_consultation_tv = v.findViewById(R.id.cancel_consultation_tv);
+
+            payment_status_button = v.findViewById(R.id.payment_status_button);
         }
     }
 

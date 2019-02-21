@@ -550,4 +550,51 @@ public final class DateUtil {
         return convertedDate;
     }
 
+    /**
+     *
+     * @return current Date from Calendar in Date format
+     * adding 1 into month because Calendar month starts from zero
+     */
+    public static Date getDate(Calendar cal){
+        return cal.getTime()/*"" + cal.get(Calendar.DATE) +"/" +
+                (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR)*/;
+    }
+
+    public static Date addOrSubtractDays(Date date, int days){
+        //Java calendar in default timezone and default locale
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+//        cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        //adding or subtracting days into Date in Java
+        cal.add(Calendar.DATE, days);
+
+        return getDate(cal);
+    }
+
+    public static Date addOrSubtractDays(int days){
+        //Java calendar in default timezone and default locale
+        Calendar cal = Calendar.getInstance();
+//        cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        //adding or subtracting days into Date in Java
+        cal.add(Calendar.DATE, days);
+
+        return getDate(cal);
+    }
+
+    public static Date normalizeTime(Date date){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+
+        return  calendar.getTime();
+    }
+
 }

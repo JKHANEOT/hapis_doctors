@@ -47,6 +47,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -56,6 +57,9 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.hapis.customer.R;
 import com.hapis.customer.logger.LOG;
+import com.hapis.customer.ui.custom.countdowntimer.CountdownTimer;
+import com.hapis.customer.ui.custom.countdowntimer.OnCountdownFinish;
+import com.hapis.customer.ui.custom.countdowntimer.TimerForCheckInOut;
 import com.hapis.customer.ui.custom.dialogplus.DialogPlus;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
 import com.hapis.customer.ui.utils.AccessPreferences;
@@ -147,6 +151,8 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
     private AppCompatTextView toolbarTitle;
     private AppCompatTextView toolbarSubtitle;
     private AppCompatImageView mToolbarLogo;
+    private RelativeLayout consultation_counter_rl;
+    private AppCompatTextView consultation_counter_tv;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -189,6 +195,9 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
     public void setUpNavigationDrawer(String screenTitle, View container) {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        consultation_counter_rl = toolbar.findViewById(R.id.consultation_counter_rl);
+        consultation_counter_tv = toolbar.findViewById(R.id.consultation_counter_tv);
 
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
         toolbarSubtitle = toolbar.findViewById(R.id.toolbar_subtitle);
@@ -241,6 +250,10 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
     public void setUpNavigationDrawer(String screenTitle, String subTitle, boolean isBackEnabled, String productDisplayImageUrl) {
 
         toolbar = findViewById(R.id.toolbar);
+
+        consultation_counter_rl = toolbar.findViewById(R.id.consultation_counter_rl);
+        consultation_counter_tv = toolbar.findViewById(R.id.consultation_counter_tv);
+
         toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
         toolbarSubtitle = toolbar.findViewById(R.id.toolbar_subtitle);
         mToolbarLogo = toolbar.findViewById(R.id.prod_icon_toolbar);
@@ -281,6 +294,31 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
                 setToolbarSubtitle(subTitle);
             }
         }
+    }
+
+    public long[] getCheckInAndOut(){
+        if(timerForCheckInOut != null)
+            return new long[]{timerForCheckInOut.checkInTime, timerForCheckInOut.checkOutTime};
+        else
+            return new long[]{0, 0};
+    }
+
+    private TimerForCheckInOut timerForCheckInOut;
+    private CountdownTimer countdownTimer;
+    private int SECONDS = 10;
+
+    public void startTimer(){
+        consultation_counter_rl.setVisibility(View.VISIBLE);
+        /*countdownTimer = new CountdownTimer(this, SECONDS, consultation_counter_tv);
+        countdownTimer.setOnCountdownFinish(new OnCountdownFinish() {
+            @Override
+            public void onCountdownFinish() {
+
+            }
+        });
+        countdownTimer.start();*/
+        timerForCheckInOut = new TimerForCheckInOut(this, consultation_counter_tv);
+        timerForCheckInOut.start();
     }
 
     public void onDBChange(int dbOperation, String tableName, String result) {
@@ -960,6 +998,17 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
 
     @Override
     protected void onDestroy() {
+
+        if(countdownTimer != null) {
+            countdownTimer.stop();
+            countdownTimer = null;
+        }
+
+        if(timerForCheckInOut != null) {
+            timerForCheckInOut.stop();
+            timerForCheckInOut = null;
+        }
+
         super.onDestroy();
     }
 

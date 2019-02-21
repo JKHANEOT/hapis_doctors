@@ -28,7 +28,7 @@ public interface RestConstants {
 
     String LOGIN_URL                                    = "/users/login";
     String REGISTER_USER_REQUEST_URL                    = "/users";
-    String UPDATE_USER_URL                              = "/customers/";
+    String UPDATE_USER_URL                              = "/users/";
 
     String getEnterprisesByEnterpriseTypeAndCity        = "/enterprises/";/*ENTERPRISE_TYPE_INDIVIDUAL(2) OR ENTERPRISE_TYPE_HOSPITAL/CityName(Bangalore)*//*GET*/
     String getUserEnterprisesByMobileNumber             = "/users/getUserEnterprisesBy/";/*{mobileNo}*/

@@ -3,8 +3,6 @@
  */
 package com.hapis.customer.ui.models.appointments;
 
-import android.content.Intent;
-
 import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
 import com.hapis.customer.ui.models.users.UserRequest;
 
@@ -50,7 +48,7 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 
 	private String appointmentShortNote;
 
-	private Double appointmentFee;
+	private Double fee;
 
 	private String mobileNumber;
 
@@ -191,11 +189,11 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 	}
 
 	public Double getAppointmentFee() {
-		return appointmentFee;
+		return fee;
 	}
 
 	public void setAppointmentFee(Double appointmentFee) {
-		this.appointmentFee = appointmentFee;
+		this.fee = appointmentFee;
 	}
 
 	public String getMobileNumber() {

@@ -47,6 +47,7 @@ public class ConsultationActivity extends BaseFragmentActivity<ConsultationViewM
         }
 
         setUpNavigationDrawer(getResources().getString(R.string.consultation), null, true, null);
+        startTimer();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new ConsultationFragment(), ConsultationFragment.TAG).addToBackStack(null).commit();
     }
