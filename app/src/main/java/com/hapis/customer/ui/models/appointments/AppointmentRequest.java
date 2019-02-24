@@ -3,6 +3,7 @@
  */
 package com.hapis.customer.ui.models.appointments;
 
+import com.hapis.customer.ui.models.consultation.Prescription;
 import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
 import com.hapis.customer.ui.models.users.UserRequest;
 
@@ -15,6 +16,10 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 	private static final long serialVersionUID = -5950575486385534665L;
 	
 	private String appointmentCode;
+
+	private Long checkInTime;
+
+	private Long checkOutTime;
 	
 	private String customerCode;
 	
@@ -51,6 +56,12 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 	private Double fee;
 
 	private String mobileNumber;
+
+	private Prescription prescription;
+
+	private String notes;
+
+	private String doctorNotes;
 
 	public String getCustomerCode() {
 		return customerCode;
@@ -202,5 +213,53 @@ public class AppointmentRequest extends AppointmentBaseRequest {
 
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+
+	public Long getCheckInTime() {
+		return checkInTime;
+	}
+
+	public void setCheckInTime(Long checkInTime) {
+		this.checkInTime = checkInTime;
+	}
+
+	public Long getCheckOutTime() {
+		return checkOutTime;
+	}
+
+	public void setCheckOutTime(Long checkOutTime) {
+		this.checkOutTime = checkOutTime;
+	}
+
+	public Double getFee() {
+		return fee;
+	}
+
+	public void setFee(Double fee) {
+		this.fee = fee;
+	}
+
+	public Prescription getPrescription() {
+		return prescription;
+	}
+
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public String getDoctorNotes() {
+		return doctorNotes;
+	}
+
+	public void setDoctorNotes(String doctorNotes) {
+		this.doctorNotes = doctorNotes;
 	}
 }

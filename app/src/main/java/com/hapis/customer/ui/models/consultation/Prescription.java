@@ -5,6 +5,7 @@ package com.hapis.customer.ui.models.consultation;
 
 import com.hapis.customer.ui.models.MessageModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +16,13 @@ public class Prescription extends MessageModel {
 
 	private static final long serialVersionUID = 2001796835749277060L;
 
-	private List<Tablet> tablets;
+	private List<Tablet> tablets = new ArrayList<>();
 	
-	private List<Syrup> syrups;
+	private List<Syrup> syrups = new ArrayList<>();
 	
-	private List<Ointment> ointments;
+	private List<Ointment> ointments = new ArrayList<>();
 	
-	private List<Soap> soap;
+	private List<Soap> soap = new ArrayList<>();
 	
 	private String prescriptionImage;
 

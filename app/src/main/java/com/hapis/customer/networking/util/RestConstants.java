@@ -42,4 +42,5 @@ public interface RestConstants {
     String getUserByCode                                = "/users/";/*{userCode}*/
     String getAppointmentsByDoctor                      = "/appointments/getByDoctor/";/*{doctorCode}/{hospitalCode}/{appointmentDate}*/
     String getAllUsersByEnterpriseCode                  = "/users/enterpriseCode/";/*{enterpriseCode}*/
+    String getHistoryByCustomerAndDoctor                = "/appointments/getHistoryByCustomerAndDoctor/";//{doctorCode}/{hospitalCode}/{customerCode}
 }

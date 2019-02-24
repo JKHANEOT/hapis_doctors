@@ -298,7 +298,7 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
 
     public long[] getCheckInAndOut(){
         if(timerForCheckInOut != null)
-            return new long[]{timerForCheckInOut.checkInTime, timerForCheckInOut.checkOutTime};
+            return new long[]{timerForCheckInOut.checkInTime, new Date().getTime()};
         else
             return new long[]{0, 0};
     }
@@ -319,6 +319,13 @@ public abstract class BaseFragmentActivity<T extends BaseViewModal> extends AppC
         countdownTimer.start();*/
         timerForCheckInOut = new TimerForCheckInOut(this, consultation_counter_tv);
         timerForCheckInOut.start();
+    }
+
+    public void stopTimer(){
+        if(timerForCheckInOut != null) {
+            timerForCheckInOut.stop();
+            timerForCheckInOut = null;
+        }
     }
 
     public void onDBChange(int dbOperation, String tableName, String result) {

@@ -9,6 +9,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/navigation_completed"
+        android:enabled="true"
+        android:icon="@drawable/ic_events_completed"
+        android:title="@string/nav_title_completed"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/navigation_inbox"
         android:enabled="true"
         android:icon="@drawable/ic_inbox"

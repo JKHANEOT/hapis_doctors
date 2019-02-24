@@ -16,11 +16,21 @@ import android.widget.RelativeLayout;
 
 import com.hapis.customer.R;
 import com.hapis.customer.ui.ConsultationActivity;
+import com.hapis.customer.ui.custom.dialogplus.DialogPlus;
+import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
 import com.hapis.customer.ui.fragments.BaseAbstractFragment;
 import com.hapis.customer.ui.models.appointments.AppointmentRequest;
 import com.hapis.customer.ui.models.consultation.Drug;
+import com.hapis.customer.ui.models.consultation.Ointment;
+import com.hapis.customer.ui.models.consultation.Prescription;
+import com.hapis.customer.ui.models.consultation.Soap;
+import com.hapis.customer.ui.models.consultation.Syrup;
+import com.hapis.customer.ui.models.consultation.Tablet;
+import com.hapis.customer.ui.models.enums.AppointmentStatusEnum;
 import com.hapis.customer.ui.models.enums.PaymentMode;
 import com.hapis.customer.ui.models.enums.PaymentStatus;
+import com.hapis.customer.ui.utils.DialogIconCodes;
+import com.hapis.customer.ui.utils.EditTextUtils;
 import com.hapis.customer.ui.view.BaseView;
 import com.hapis.customer.ui.view.ConsultationFragmentView;
 import com.hapis.customer.ui.view.ConsultationFragmentViewModal;
@@ -160,7 +170,47 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long[] checkInAndOut = ((ConsultationActivity)getActivity()).getCheckInAndOut();
+
+                AppointmentRequest appointmentRequest = ((ConsultationActivity)getActivity()).getAppointmentRequest();
+                if(appointmentRequest != null) {
+
+                    boolean prescriptionNotFound = false;
+
+                    if(mPrescription == null || (mPrescription != null && mPrescription.size() == 0))
+                        prescriptionNotFound = true;
+
+                    if(prescriptionNotFound && EditTextUtils.isEmpty(doctor_appointment_notes)){
+                        showError(getResources().getString(R.string.please_provide_prescription_or_consultation_summary_for_reference), null, null, null, DialogIconCodes.DIALOG_FAILED.getIconCode());
+                    }else{
+                        ((ConsultationActivity)getActivity()).showProgressDialog(getActivity(), getResources().getString(R.string.consultation));
+                        long[] checkInAndOut = ((ConsultationActivity) getActivity()).getCheckInAndOut();
+                        if(checkInAndOut != null && checkInAndOut.length == 2){
+                            appointmentRequest.setCheckInTime(checkInAndOut[0]);
+                            appointmentRequest.setCheckOutTime(checkInAndOut[1]);
+
+                            Prescription prescription = new Prescription();
+                            for(Drug drug : mPrescription){
+                                if(drug instanceof Tablet){
+                                    prescription.getTablets().add((Tablet)drug);
+                                }else if(drug instanceof Syrup){
+                                    prescription.getSyrups().add((Syrup)drug);
+                                }else if(drug instanceof Ointment){
+                                    prescription.getOintments().add((Ointment)drug);
+                                }else if(drug instanceof Soap){
+                                    prescription.getSoap().add((Soap)drug);
+                                }
+                            }
+
+                            appointmentRequest.setPrescription(prescription);
+                        }
+                        ((ConsultationActivity) getActivity()).stopTimer();
+
+                        appointmentRequest.setState(AppointmentStatusEnum.CLOSED.code());
+
+                        mViewModal.completeConsultation(appointmentRequest);
+                    }
+                }else
+                    showError(getResources().getString(R.string.appointment_details_not_found_to_proceed), null, null,null, DialogIconCodes.DIALOG_NOT_AVAILABLE.getIconCode());
             }
         });
 
@@ -171,12 +221,6 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         view_more_patient_appointment_history_tv = v.findViewById(R.id.view_more_patient_appointment_history_tv);
 
         patient_appointment_history_info_rl = v.findViewById(R.id.patient_appointment_history_info_rl);
-        patient_appointment_history_info_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         appointment_day_tv = v.findViewById(R.id.appointment_day_tv);
         appointment_date_tv = v.findViewById(R.id.appointment_date_tv);
@@ -275,11 +319,82 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
 
     @Override
     public void failedToProcess(String errorMsg) {
-
+        ((ConsultationActivity)getActivity()).dismissProgressDialog();
+        ((ConsultationActivity)getActivity()).showError(errorMsg, null, null, null, DialogIconCodes.DIALOG_FAILED.getIconCode());
     }
 
     @Override
     public void completeConsultation(String msg) {
+        ((ConsultationActivity)getActivity()).dismissProgressDialog();
+        OnClickListener onClickListener = new OnClickListener() {
+            @Override
+            public void onClick(DialogPlus dialog, View view) {
+                switch (view.getId()){
+                    case R.id.positive_btn:
+                    {
+                        dialog.dismiss();
+                        getActivity().finish();
+                        break;
+                    }
+                }
+            }
+        };
 
+        showError(getResources().getString(R.string.thank_you_doctor), onClickListener, getResources().getString(R.string.consultation_completed), null, DialogIconCodes.DIALOG_SUCCESS.getIconCode());
+    }
+
+    @Override
+    public void showError(String errorMsg, OnClickListener onClickListener, String positiveLbl, String negativeLbl, String status) {
+        ((ConsultationActivity)getActivity()).showError(errorMsg, onClickListener, positiveLbl, negativeLbl, status);
+    }
+
+    @Override
+    public void loadPatientHistory(final List<AppointmentRequest> appointmentRequests) {
+        if(appointmentRequests != null && appointmentRequests.size() > 0){
+
+            AppointmentRequest appointmentRequest = appointmentRequests.get(0);
+
+            patient_appointment_history_ll.setVisibility(View.VISIBLE);
+            if(appointmentRequests.size() > 1) {
+                view_more_patient_appointment_history_tv.setVisibility(View.VISIBLE);
+                view_more_patient_appointment_history_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO:Show all appointments.
+                    }
+                });
+            }else{
+                view_more_patient_appointment_history_tv.setVisibility(View.GONE);
+                view_more_patient_appointment_history_tv.setOnClickListener(null);
+            }
+
+            if(appointmentRequest != null){
+                patient_appointment_history_info_rl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO:Show consultation details.
+                    }
+                });
+            }else{
+                patient_appointment_history_ll.setVisibility(View.GONE);
+            }
+        }else{
+            patient_appointment_history_ll.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(((ConsultationActivity)getActivity()).getAppointmentRequest() != null){
+            String customerCode = (((ConsultationActivity)getActivity()).getAppointmentRequest()).getCustomerCode();
+            String doctorCode = (((ConsultationActivity)getActivity()).getAppointmentRequest()).getDoctorCode();
+            String hospitalCode = (((ConsultationActivity)getActivity()).getAppointmentRequest()).getHospitalCode();
+
+            if(customerCode != null && doctorCode != null && hospitalCode != null){
+                mViewModal.loadPatientHistory(doctorCode, hospitalCode, customerCode);
+            }
+        }
     }
 }

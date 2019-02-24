@@ -1673,6 +1673,7 @@
     <string name="signed_up_data_not_found_by_email_id_try_doing_registration">Signed up data not found by email ID try doing registration</string>
     <string name="sign_in_successful">Sign In Successful</string>
     <string name="nav_title_upcoming">Appointments</string>
+    <string name="nav_title_completed">Consulted</string>
     <string name="nav_title_history">History</string>
     <string name="book_appointment">Book Appointment</string>
     <string name="select_enterprise">Select Hospital</string>
@@ -1787,5 +1788,9 @@
     <string name="user_logout_not_possible_please_try_later">User logout not possible, please try later.</string>
     <string name="update_profile_successful">Update profile successful.</string>
     <string name="payment">Payment :</string>
+    <string name="appointment_details_not_found_to_proceed">Appointment details not found to proceed.</string>
+    <string name="consultation_completed">Consultation completed.</string>
+    <string name="please_provide_prescription_or_consultation_summary_for_reference">Please provide prescription or consultation summary for reference.</string>
+    <string name="thank_you_doctor">Thank you doctor :-)</string>
 
 </resources>
