@@ -1,5 +1,6 @@
 package com.hapis.customer.ui.fragments.consultation;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -15,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.hapis.customer.R;
+import com.hapis.customer.networking.json.JSONAdaptor;
 import com.hapis.customer.ui.ConsultationActivity;
+import com.hapis.customer.ui.ConsultationSummaryActivity;
 import com.hapis.customer.ui.custom.dialogplus.DialogPlus;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
 import com.hapis.customer.ui.fragments.BaseAbstractFragment;
@@ -265,6 +268,10 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
+                    if(appointmentRequest.getCustomerCode() != null && appointmentRequest.getCustomerCode().length() > 0)
+                        patient_id_val_tv.setText(appointmentRequest.getCustomerCode());
+
                     if(appointmentRequest.getPatientName() != null)
                         patient_name_val_tv.setText(appointmentRequest.getPatientName());
 
@@ -352,7 +359,7 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
     public void loadPatientHistory(final List<AppointmentRequest> appointmentRequests) {
         if(appointmentRequests != null && appointmentRequests.size() > 0){
 
-            AppointmentRequest appointmentRequest = appointmentRequests.get(0);
+            final AppointmentRequest appointmentRequest = appointmentRequests.get(0);
 
             patient_appointment_history_ll.setVisibility(View.VISIBLE);
             if(appointmentRequests.size() > 1) {
@@ -372,7 +379,13 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
                 patient_appointment_history_info_rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO:Show consultation details.
+                        try{
+                            Intent intent = new Intent(getActivity(), ConsultationSummaryActivity.class);
+                            intent.putExtra(ConsultationSummaryActivity.APPOINTMENT_DETAILS_TAG, JSONAdaptor.toJSON(appointmentRequest));
+                            getActivity().startActivity(intent);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 });
             }else{

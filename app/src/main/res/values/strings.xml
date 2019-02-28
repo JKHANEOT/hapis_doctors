@@ -1792,5 +1792,18 @@
     <string name="consultation_completed">Consultation completed.</string>
     <string name="please_provide_prescription_or_consultation_summary_for_reference">Please provide prescription or consultation summary for reference.</string>
     <string name="thank_you_doctor">Thank you doctor :-)</string>
+    <string name="consultation_summary">Consultation Summary</string>
+
+    <string name="consultation_summary_page">Consultation Info</string>
+    <string name="payment_information_summary"><u>Payment Information:</u></string>
+    <string name="consultation_summary_summary"><u>Consultation Summary:</u></string>
+    <string name="appointment_information"><u>Appointment Information:</u></string>
+    <string name="your_notes">Your Notes</string>
+    <string name="medicine">Medicine</string>
+    <string name="consummation">Consummation (Days)</string>
+    <string name="morning">Morning</string>
+    <string name="BF">BF</string>
+    <string name="AF">AF</string>
+    <string name="no_appointments_visited">No Appointments Visited.</string>
 
 </resources>
