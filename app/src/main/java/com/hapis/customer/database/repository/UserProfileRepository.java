@@ -19,6 +19,7 @@ import com.hapis.customer.networking.json.JSONAdaptor;
 import com.hapis.customer.networking.util.RestConstants;
 import com.hapis.customer.ui.models.ErrorMessage;
 import com.hapis.customer.ui.models.ResponseStatus;
+import com.hapis.customer.ui.models.enums.UserTypeEnum;
 import com.hapis.customer.ui.models.users.LoginRequest;
 import com.hapis.customer.ui.models.users.LoginResponse;
 import com.hapis.customer.ui.models.users.UserListResponse;
@@ -720,7 +721,7 @@ public class UserProfileRepository {
                 if(userProfileTable.getRoles() != null){
                     userRequest.setRoles(userProfileTable.getRoles());
                 }
-                userRequest.setUserType(HapisApplication.getApplication().getResources().getInteger(R.integer.application_type));
+                userRequest.setUserType(UserTypeEnum.DOCTOR.code());
                 userRequest.setUserCode(userProfileTable.getUniqueId());
             }
 

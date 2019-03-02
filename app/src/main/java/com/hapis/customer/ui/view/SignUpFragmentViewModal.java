@@ -13,6 +13,7 @@ import com.hapis.customer.ui.models.HapisModel;
 import com.hapis.customer.ui.models.ResponseStatus;
 import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
 import com.hapis.customer.ui.models.enterprise.EnterpriseResponseList;
+import com.hapis.customer.ui.models.enums.UserTypeEnum;
 import com.hapis.customer.ui.models.users.UserRequest;
 import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.EditTextUtils;
@@ -89,7 +90,7 @@ public class SignUpFragmentViewModal extends BaseViewModal<SignUpFragmentView> {
         userRequest.setEmailAddress(emailAddress);
         userRequest.setPassword(password);
 
-        userRequest.setUserType(HapisApplication.getApplication().getResources().getInteger(R.integer.application_type));
+        userRequest.setUserType(UserTypeEnum.DOCTOR.code());
 
         userProfileRepository.doSignup(mutableLiveData, userRequest);
         mutableLiveData.observe(mOwner, new Observer<UserResponse>() {

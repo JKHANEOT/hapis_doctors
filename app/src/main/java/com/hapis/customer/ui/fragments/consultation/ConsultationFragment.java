@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.hapis.customer.R;
 import com.hapis.customer.networking.json.JSONAdaptor;
@@ -37,9 +38,11 @@ import com.hapis.customer.ui.utils.EditTextUtils;
 import com.hapis.customer.ui.view.BaseView;
 import com.hapis.customer.ui.view.ConsultationFragmentView;
 import com.hapis.customer.ui.view.ConsultationFragmentViewModal;
+import com.hapis.customer.utils.DateUtil;
 import com.hapis.customer.utils.Util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragmentViewModal> implements ConsultationFragmentView {
@@ -124,12 +127,17 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
         capture_prescription_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getActivity(), "Will introduce shortly.", Toast.LENGTH_SHORT).show();
             }
         });
 
         attach_prescription_rl = v.findViewById(R.id.attach_prescription_rl);
-        attach_prescription_rl.setVisibility(View.GONE);
+        attach_prescription_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Will introduce shortly.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         add_prescription_rl = v.findViewById(R.id.add_prescription_rl);
         add_prescription_rl.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +196,10 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
                         ((ConsultationActivity)getActivity()).showProgressDialog(getActivity(), getResources().getString(R.string.consultation));
                         long[] checkInAndOut = ((ConsultationActivity) getActivity()).getCheckInAndOut();
                         if(checkInAndOut != null && checkInAndOut.length == 2){
+
+                            if(!EditTextUtils.isEmpty(doctor_appointment_notes))
+                                appointmentRequest.setDoctorNotes(EditTextUtils.getText(doctor_appointment_notes));
+
                             appointmentRequest.setCheckInTime(checkInAndOut[0]);
                             appointmentRequest.setCheckOutTime(checkInAndOut[1]);
 
@@ -287,8 +299,8 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
                         patient_mobile_val_tv.setText(appointmentRequest.getMobileNumber());
                     }
 
-                    if(appointmentRequest.getAppointmentShortNote() != null) {
-                        input_patients_notes.setText(appointmentRequest.getAppointmentShortNote());
+                    if(appointmentRequest.getNotes() != null) {
+                        input_patients_notes.setText(appointmentRequest.getNotes());
                     }
 
                     if(appointmentRequest.getPaymentMode() != null) {
@@ -373,6 +385,36 @@ public class ConsultationFragment extends BaseAbstractFragment<ConsultationFragm
             }else{
                 view_more_patient_appointment_history_tv.setVisibility(View.GONE);
                 view_more_patient_appointment_history_tv.setOnClickListener(null);
+
+                final Date date = new Date(appointmentRequest.getCheckInTime());
+
+                String dayAsString = DateUtil.convertDateToDateStr(date, DateUtil.DATE_FORMAT_EEE);
+                String dateAsString = DateUtil.convertDateToDateStr(date, DateUtil.DATE_FORMAT_dd);
+                String yearAsString = DateUtil.convertDateToDateStr(date, DateUtil.DATE_FORMAT_MMM_YYYY);
+                String timeAsString = DateUtil.convertDateToDateStr(date, DateUtil.DATE_FORMAT_HH_mm_am_pm);
+
+                if(dayAsString != null){
+                    appointment_day_tv.setText(dayAsString);
+                }
+
+                if(dateAsString != null){
+                    appointment_date_tv.setText(dateAsString);
+                }
+
+                if(yearAsString != null){
+                    appointment_month_year_tv.setText(yearAsString);
+                }
+
+                if(timeAsString != null){
+                    appointment_time_tv.setText(timeAsString);
+                }
+
+                if(appointmentRequest.getNotes() != null && appointmentRequest.getNotes().length() > 0){
+                    appointment_doctor_notes_tv.setText(appointmentRequest.getNotes());
+                }
+
+                if(appointmentRequest.getFee() != null)
+                    appointment_fees_tv.setText(Util.getFormattedAmount(appointmentRequest.getFee()));
             }
 
             if(appointmentRequest != null){

@@ -39,6 +39,16 @@ public final class DateUtil {
     public static final String DATE_FORMAT_MMM = "MMM";
 
     /**
+     * The Constant DATE_FORMAT_MMM.
+     */
+    public static final String DATE_FORMAT_EEE = "EEE";
+
+    /**
+     * The Constant DATE_FORMAT_dd_MM_yyyy_SEP_HIPHEN.
+     */
+    public static final String DATE_FORMAT_MMM_YYYY = "MMM yyyy";
+
+    /**
      * The Constant DATE_FORMAT_dd.
      */
     public static final String DATE_FORMAT_dd = "dd";

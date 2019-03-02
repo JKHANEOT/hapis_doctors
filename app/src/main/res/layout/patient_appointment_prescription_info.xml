@@ -40,7 +40,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_camera_place_new_sr" />
+                app:srcCompat="@drawable/ic_camera_disabled" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/capture_photo_tv"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
-                android:textColor="@color/app_dark_color"/>
+                android:textColor="@color/disabled_color"/>
 
         </RelativeLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_attachments_place_new_sr"
+                app:srcCompat="@drawable/ic_attachments_disabled"
                 android:layout_marginStart="20dp" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
-                android:textColor="@color/app_dark_color"/>
+                android:textColor="@color/disabled_color"/>
 
         </RelativeLayout>
 

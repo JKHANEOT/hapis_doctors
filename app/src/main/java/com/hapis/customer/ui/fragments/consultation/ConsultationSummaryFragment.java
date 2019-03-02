@@ -181,8 +181,8 @@ public class ConsultationSummaryFragment extends BaseAbstractFragment<Consultati
                         patient_mobile_val_tv.setText(appointmentRequest.getMobileNumber());
                     }
 
-                    if(appointmentRequest.getAppointmentShortNote() != null) {
-                        patient_notes.setText(appointmentRequest.getAppointmentShortNote());
+                    if(appointmentRequest.getNotes() != null && appointmentRequest.getNotes().length() > 0) {
+                        patient_notes.setText(appointmentRequest.getNotes());
                     }
 
                     if(appointmentRequest.getAppointmentFee() != null) {
@@ -229,8 +229,8 @@ public class ConsultationSummaryFragment extends BaseAbstractFragment<Consultati
                         setPrescription(drugs);
                     }
 
-                    if(appointmentRequest.getNotes() != null && appointmentRequest.getNotes().length() > 0){
-                        doctor_appointment_notes.setText(appointmentRequest.getNotes());
+                    if(appointmentRequest.getDoctorNotes() != null && appointmentRequest.getDoctorNotes().length() > 0){
+                        doctor_appointment_notes.setText(appointmentRequest.getDoctorNotes());
                     }
 
                     if(appointmentRequest.getCheckInTime() != null){
