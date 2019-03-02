@@ -23,4 +23,13 @@ public class LoginResponse  extends ResponseModel {
 		message = arg0;
 	}
 
+	private String userCode;
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
 }

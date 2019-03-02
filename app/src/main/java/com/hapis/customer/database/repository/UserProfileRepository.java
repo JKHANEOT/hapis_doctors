@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 
 import com.hapis.customer.HapisApplication;
-import com.hapis.customer.R;
 import com.hapis.customer.database.HapisDatabase;
 import com.hapis.customer.database.daos.AddressDao;
 import com.hapis.customer.database.daos.ApplicationProfileDao;
@@ -22,7 +21,6 @@ import com.hapis.customer.ui.models.ResponseStatus;
 import com.hapis.customer.ui.models.enums.UserTypeEnum;
 import com.hapis.customer.ui.models.users.LoginRequest;
 import com.hapis.customer.ui.models.users.LoginResponse;
-import com.hapis.customer.ui.models.users.UserListResponse;
 import com.hapis.customer.ui.models.users.UserRequest;
 import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.AccessPreferences;
@@ -179,7 +177,7 @@ public class UserProfileRepository {
         }
     }
 
-    public void doLogin(final MutableLiveData<LoginResponse> mutableLiveData, final String userName, final String enterpriseCode, final String password) {
+    public void doLogin(final MutableLiveData<UserResponse> mutableLiveData, final String userName, final String enterpriseCode, final String password) {
 
         LoginRequest loginRequest = new LoginRequest();
 
@@ -197,7 +195,7 @@ public class UserProfileRepository {
                 ResponseStatus responseStatus = new ResponseStatus();
                 responseStatus.setStatusCode(ResponseStatus.FAILED);
 
-                LoginResponse userModelResponse = new LoginResponse();
+                UserResponse userModelResponse = new UserResponse();
                 userModelResponse.setStatus(responseStatus);
 
                 mutableLiveData.postValue(userModelResponse);
@@ -209,7 +207,7 @@ public class UserProfileRepository {
                     ResponseStatus responseStatus = new ResponseStatus();
                     responseStatus.setStatusCode(ResponseStatus.FAILED);
 
-                    LoginResponse userModelResponse = new LoginResponse();
+                    UserResponse userModelResponse = new UserResponse();
                     userModelResponse.setStatus(responseStatus);
 
                     mutableLiveData.postValue(userModelResponse);
@@ -242,7 +240,7 @@ public class UserProfileRepository {
                             ResponseStatus responseStatus = new ResponseStatus();
                             responseStatus.setStatusCode(ResponseStatus.SUCCESS);
 
-                            LoginResponse userModelResponse = new LoginResponse();
+                            UserResponse userModelResponse = new UserResponse();
                             userModelResponse.setStatus(responseStatus);
 
                             mutableLiveData.postValue(userModelResponse);
@@ -251,14 +249,16 @@ public class UserProfileRepository {
                             applicationProfileTable.setAppStatus(ApplicationConstants.USER_LOGGED_IN);
                             applicationProfileDao.insert(applicationProfileTable);
 
-                            getUserDetails(mutableLiveData, userName, enterpriseCode, password);
+                            LoginResponse loginResponse = JSONAdaptor.fromJSON(response, LoginResponse.class);
+                            getUserDetails(mutableLiveData, loginResponse.getUserCode());
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                         ResponseStatus responseStatus = new ResponseStatus();
                         responseStatus.setStatusCode(ResponseStatus.FAILED);
 
-                        LoginResponse userModelResponse = new LoginResponse();
+                        UserResponse userModelResponse = new UserResponse();
                         userModelResponse.setStatus(responseStatus);
 
                         mutableLiveData.postValue(userModelResponse);
@@ -275,7 +275,7 @@ public class UserProfileRepository {
             ResponseStatus responseStatus = new ResponseStatus();
             responseStatus.setStatusCode(ResponseStatus.FAILED);
 
-            LoginResponse userModelResponse = new LoginResponse();
+            UserResponse userModelResponse = new UserResponse();
             userModelResponse.setStatus(responseStatus);
 
             mutableLiveData.postValue(userModelResponse);
@@ -284,14 +284,131 @@ public class UserProfileRepository {
             ResponseStatus responseStatus = new ResponseStatus();
             responseStatus.setStatusCode(ResponseStatus.FAILED);
 
-            LoginResponse userModelResponse = new LoginResponse();
+            UserResponse userModelResponse = new UserResponse();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        }
+    }
+    public void getUserDetails(final MutableLiveData<UserResponse> mutableLiveData, String userCode) {
+
+        RestCall restCall = new RestCall();
+        restCall.setOnRestCallListener(new RestCall.RestCallListener() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                ResponseStatus responseStatus = new ResponseStatus();
+                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                UserResponse userModelResponse = new UserResponse();
+                userModelResponse.setStatus(responseStatus);
+
+                mutableLiveData.postValue(userModelResponse);
+            }
+
+            @Override
+            public void onResponse(RestCall.Result result, String response, List<ErrorMessage> errorMessages, String msg) {
+                if (result == RestCall.Result.FAILED || result == RestCall.Result.EXCEPTION) {
+                    ResponseStatus responseStatus = new ResponseStatus();
+                    responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                    UserResponse userModelResponse = new UserResponse();
+                    userModelResponse.setStatus(responseStatus);
+
+                    mutableLiveData.postValue(userModelResponse);
+                } else {
+                    try {
+                        if(response != null && response.length() > 0) {
+                            UserResponse userModelResponse = JSONAdaptor.fromJSON(response, UserResponse.class);
+                            if (userModelResponse != null && userModelResponse.getMessage() != null) {
+                                ResponseStatus responseStatus = new ResponseStatus();
+                                responseStatus.setStatusCode(ResponseStatus.SUCCESS);
+
+                                UserRequest userRequest = userModelResponse.getMessage();
+
+                                if(userRequest != null){
+
+                                    UserProfileTable userProfileTable = new UserProfileTable();
+
+                                    userProfileTable.setUniqueId(userRequest.getUserCode());
+                                    AccessPreferences.put(HapisApplication.getApplication(), ApplicationConstants.LOGGED_IN_USER_GUID, userProfileTable.getUniqueId());
+                                    userProfileTable.setEnterpriseCode(userRequest.getEnterpriseCode());
+                                    userProfileTable.setRoles(userRequest.getRoles());
+                                    userProfileTable.setTitle(userRequest.getNamePrefix());
+                                    userProfileTable.setFirstName(userRequest.getFirstName());
+                                    userProfileTable.setMiddleName(userRequest.getMiddleName());
+                                    userProfileTable.setLastName(userRequest.getLastName());
+                                    userProfileTable.setMobileNumber(userRequest.getMobileNo());
+                                    userProfileTable.setEmail(userRequest.getEmailAddress());
+                                    userProfileTable.setPassword(userRequest.getPassword());
+
+                                    userProfileTable.setProfileUpdatedDate(new Date().getTime());
+
+                                    userProfileTable.setAgentCode(userRequest.getAgentCode());
+                                    userProfileTable.setCustomerType(userRequest.getUserType());
+                                    userProfileTable.setState(userRequest.getState());
+
+                                    userProfileDao.insert(userProfileTable);
+                                }
+
+                                mutableLiveData.postValue(userModelResponse);
+
+                            }else{
+                                ResponseStatus responseStatus = new ResponseStatus();
+                                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                                userModelResponse = new UserResponse();
+                                userModelResponse.setStatus(responseStatus);
+                                mutableLiveData.postValue(userModelResponse);
+                            }
+                        }else{
+                            ResponseStatus responseStatus = new ResponseStatus();
+                            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                            UserResponse userModelResponse = new UserResponse();
+                            userModelResponse.setStatus(responseStatus);
+
+                            mutableLiveData.postValue(userModelResponse);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ResponseStatus responseStatus = new ResponseStatus();
+                        responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                        UserResponse userModelResponse = new UserResponse();
+                        userModelResponse.setStatus(responseStatus);
+
+                        mutableLiveData.postValue(userModelResponse);
+                    }
+                }
+            }
+        });
+        try {
+            restCall.get(null, false, "Loading items",
+                    HapisApplication.getApplication().getBackendUrl()+"9300" + RestConstants.getUserByCode+userCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            UserResponse userModelResponse = new UserResponse();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            UserResponse userModelResponse = new UserResponse();
             userModelResponse.setStatus(responseStatus);
 
             mutableLiveData.postValue(userModelResponse);
         }
     }
 
-    public void getUserDetails(final MutableLiveData<LoginResponse> mutableLiveData, final String userName, final String enterpriseCode, final String password) {
+    /*public void getUserDetails(final MutableLiveData<LoginResponse> mutableLiveData, final String userName, final String enterpriseCode, final String password) {
 
         RestCall restCall = new RestCall();
         restCall.setOnRestCallListener(new RestCall.RestCallListener() {
@@ -437,7 +554,7 @@ public class UserProfileRepository {
 
             mutableLiveData.postValue(userModelResponse);
         }
-    }
+    }*/
 
     public void doSignup(final MutableLiveData<UserResponse> mutableLiveData, final UserRequest userRequest) {
 

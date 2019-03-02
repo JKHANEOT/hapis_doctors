@@ -30,6 +30,7 @@ import com.hapis.customer.ui.utils.EditTextUtils;
 import com.hapis.customer.utils.DateUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -1152,6 +1153,128 @@ public class AppointmentRepository {
             userModelResponse.setStatus(responseStatus);
 
             mutableLiveData.postValue(userModelResponse);
+        }
+    }
+
+    public void getAppointmentsHistoryBydDoctorAndHospitalCodes(final MutableLiveData<AppointmentResponseList> mutableLiveData, String doctorCode, String hospitalCode) {
+
+        RestCall restCall = new RestCall();
+        restCall.setOnRestCallListener(new RestCall.RestCallListener() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+
+                ResponseStatus responseStatus = new ResponseStatus();
+                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                AppointmentResponseList userModelResponse = new AppointmentResponseList();
+                userModelResponse.setStatus(responseStatus);
+
+                mutableLiveData.postValue(userModelResponse);
+            }
+
+            @Override
+            public void onResponse(RestCall.Result result, String response, List<ErrorMessage> errorMessages, String msg) {
+                if (result == RestCall.Result.FAILED || result == RestCall.Result.EXCEPTION) {
+                    ResponseStatus responseStatus = new ResponseStatus();
+                    responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                    AppointmentResponseList userModelResponse = new AppointmentResponseList();
+                    userModelResponse.setStatus(responseStatus);
+
+                    mutableLiveData.postValue(userModelResponse);
+                } else {
+                    try {
+                        if(response != null && response.length() > 0) {
+                            AppointmentResponseList appointmentResponseList = JSONAdaptor.fromJSON(response, AppointmentResponseList.class);
+                            if (appointmentResponseList != null) {
+                                mutableLiveData.postValue(appointmentResponseList);
+                            }else{
+                                ResponseStatus responseStatus = new ResponseStatus();
+                                responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                                AppointmentResponseList userModelResponse = new AppointmentResponseList();
+                                userModelResponse.setStatus(responseStatus);
+
+                                mutableLiveData.postValue(userModelResponse);
+                            }
+                        }else{
+                            ResponseStatus responseStatus = new ResponseStatus();
+                            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                            AppointmentResponseList userModelResponse = new AppointmentResponseList();
+                            userModelResponse.setStatus(responseStatus);
+
+                            mutableLiveData.postValue(userModelResponse);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ResponseStatus responseStatus = new ResponseStatus();
+                        responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+                        AppointmentResponseList userModelResponse = new AppointmentResponseList();
+                        userModelResponse.setStatus(responseStatus);
+
+                        mutableLiveData.postValue(userModelResponse);
+                    }
+                }
+            }
+        });
+        try {
+            restCall.get(null, false, "Loading items",
+                    HapisApplication.getApplication().getBackendUrl()+"9300" + RestConstants.getHistoryByDoctorAndHospital +doctorCode+"/"+hospitalCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            AppointmentResponseList userModelResponse = new AppointmentResponseList();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseStatus responseStatus = new ResponseStatus();
+            responseStatus.setStatusCode(ResponseStatus.FAILED);
+
+            AppointmentResponseList userModelResponse = new AppointmentResponseList();
+            userModelResponse.setStatus(responseStatus);
+
+            mutableLiveData.postValue(userModelResponse);
+        }
+    }
+
+    public class GetUserDetails extends AsyncTask<Void, Void, List<String>> {
+
+        private  MutableLiveData<AppointmentResponseList> mutableLiveData;
+
+        public GetUserDetails(MutableLiveData<AppointmentResponseList> mutableLiveData){
+            this.mutableLiveData = mutableLiveData;
+        }
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+
+            List<String> strings = null;
+
+            UserProfileTable userProfileTable = new UserProfileRepository().getUserProfile();
+            if(userProfileTable != null && userProfileTable.getUniqueId() != null && userProfileTable.getEnterpriseCode() != null) {
+                strings = new ArrayList<>();
+                strings.add(userProfileTable.getUniqueId());
+                strings.add(userProfileTable.getEnterpriseCode());
+            }
+
+            return strings;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            super.onPostExecute(strings);
+            if(strings != null && strings.size() > 0){
+
+                getAppointmentsHistoryBydDoctorAndHospitalCodes(mutableLiveData, strings.get(0), strings.get(1));
+            }
         }
     }
 }

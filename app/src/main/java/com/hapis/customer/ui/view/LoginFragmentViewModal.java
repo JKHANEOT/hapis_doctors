@@ -15,6 +15,8 @@ import com.hapis.customer.ui.models.enterprise.EnterpriseRequest;
 import com.hapis.customer.ui.models.enterprise.EnterpriseSimpleRequest;
 import com.hapis.customer.ui.models.enterprise.EnterpriseSimpleResponse;
 import com.hapis.customer.ui.models.users.LoginResponse;
+import com.hapis.customer.ui.models.users.UserRequest;
+import com.hapis.customer.ui.models.users.UserResponse;
 import com.hapis.customer.ui.utils.EditTextUtils;
 
 import java.util.ArrayList;
@@ -68,14 +70,14 @@ public class LoginFragmentViewModal extends BaseViewModal<LoginFragmentView> {
         mView.validateScreenFields(msg);
     }
 
-    MutableLiveData<LoginResponse> mutableLiveData = new MutableLiveData<LoginResponse>();
+    MutableLiveData<UserResponse> mutableLiveData = new MutableLiveData<UserResponse>();
 
     public void doLogin(String userName, String enterpriseCode, String password) {
 
         userProfileRepository.doLogin(mutableLiveData, userName, enterpriseCode, password);
-        mutableLiveData.observe(mOwner, new Observer<LoginResponse>() {
+        mutableLiveData.observe(mOwner, new Observer<UserResponse>() {
             @Override
-            public void onChanged(@Nullable LoginResponse userModelResponse) {
+            public void onChanged(@Nullable UserResponse userModelResponse) {
                 if(userModelResponse != null){
                     if(userModelResponse.getStatus() != null && userModelResponse.getStatus().getStatusCode() != null && userModelResponse.getStatus().getStatusCode().intValue() == ResponseStatus.SUCCESS){
                         mView.SigninRequestSuccess(HapisApplication.getApplication().getResources().getString(R.string.sign_in_successful));

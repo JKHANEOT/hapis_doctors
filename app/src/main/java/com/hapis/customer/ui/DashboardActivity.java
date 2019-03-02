@@ -25,6 +25,7 @@ import com.hapis.customer.ui.custom.badges.Badge;
 import com.hapis.customer.ui.custom.badges.BadgeView;
 import com.hapis.customer.ui.custom.dialogplus.DialogPlus;
 import com.hapis.customer.ui.custom.dialogplus.OnClickListener;
+import com.hapis.customer.ui.fragments.ClosedAppointmentsFrag;
 import com.hapis.customer.ui.fragments.MenuMoreDialogFragment;
 import com.hapis.customer.ui.fragments.UpComingSchedulesFrag;
 import com.hapis.customer.ui.utils.AlertUtil;
@@ -133,6 +134,10 @@ public class DashboardActivity extends BaseFragmentActivity<DashboardViewModal> 
                 case R.id.navigation_upcoming: {
                     loadFragment(new UpComingSchedulesFrag());
                     return true;
+                }
+                case R.id.navigation_completed:{
+                    loadFragment(new ClosedAppointmentsFrag());
+                    break;
                 }
                 case R.id.navigation_inbox: {
                     /*Intent intentInbox = new Intent(DashBoardActivity.this, PushNotificationsActivity.class);
